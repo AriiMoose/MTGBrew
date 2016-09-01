@@ -77,7 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mtgbrew_db',
-        'USER': 'mtgbrew_dbuser',
+        'USER': 'mtgbrew_db_user',
         'PASSWORD': 'kvx9@5-h0#bt',
         'HOST': 'localhost',
         'PORT': '',
