@@ -31,3 +31,4 @@ class Deck(models.Model):
 	deck_rating	= models.IntegerField()
 	deck_last_edited = models.DateTimeField()
 	deck_tags = ArrayField(models.CharField(max_length=15), null=True, blank=True)
+	
