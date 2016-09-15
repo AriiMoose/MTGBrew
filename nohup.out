@@ -1,0 +1,361 @@
+Unhandled exception in thread started by <function wrapper at 0x7f2c75164230>
+Performing system checks...
+
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 121, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/base.py", line 374, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/base.py", line 361, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/urls.py", line 24, in check_resolver
+    for pattern in resolver.url_patterns:
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/urls/resolvers.py", line 313, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/urls/resolvers.py", line 306, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/andrew/MTGBrew/mtgbrew/urls.py", line 24
+    url(r'^deck-builder/', views.deck-builder, name ='deck-builder')
+      ^
+SyntaxError: invalid syntax
+Unhandled exception in thread started by <function wrapper at 0x7f9d13a38230>
+Performing system checks...
+
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 121, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/base.py", line 374, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/base.py", line 361, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/urls.py", line 24, in check_resolver
+    for pattern in resolver.url_patterns:
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/urls/resolvers.py", line 313, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/urls/resolvers.py", line 306, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/andrew/MTGBrew/mtgbrew/urls.py", line 19, in <module>
+    from brew import views
+  File "/home/andrew/MTGBrew/brew/views.py", line 9
+    def deck-builder(request)
+            ^
+SyntaxError: invalid syntax
+Unhandled exception in thread started by <function wrapper at 0x7fbdfe464230>
+Performing system checks...
+
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/autoreload.py", line 226, in wrapper
+    fn(*args, **kwargs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/commands/runserver.py", line 121, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/base.py", line 374, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/base.py", line 361, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/registry.py", line 81, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/urls.py", line 14, in check_url_config
+    return check_resolver(resolver)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/checks/urls.py", line 24, in check_resolver
+    for pattern in resolver.url_patterns:
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/urls/resolvers.py", line 313, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/utils/functional.py", line 35, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/urls/resolvers.py", line 306, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/andrew/MTGBrew/mtgbrew/urls.py", line 19, in <module>
+    from brew import views
+  File "/home/andrew/MTGBrew/brew/views.py", line 9
+    def deck_builder(request)
+                            ^
+SyntaxError: invalid syntax
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, 'brew/search.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: brew/search.html
+[02/Sep/2016 15:37:04] "GET / HTTP/1.1" 500 83479
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 02, 2016 - 15:36:52
+Django version 1.10.1, using settings 'mtgbrew.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, 'brew/search-page.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: brew/search-page.html
+[02/Sep/2016 15:37:22] "GET / HTTP/1.1" 500 83699
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, 'brew/search-page.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: brew/search-page.html
+[02/Sep/2016 15:37:23] "GET / HTTP/1.1" 500 83699
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, 'brew/search-page.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: brew/search-page.html
+[02/Sep/2016 15:41:54] "GET / HTTP/1.1" 500 83564
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 02, 2016 - 15:37:20
+Django version 1.10.1, using settings 'mtgbrew.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, '/search-page.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: /search-page.html
+[02/Sep/2016 15:55:56] "GET / HTTP/1.1" 500 82714
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 02, 2016 - 15:46:47
+Django version 1.10.1, using settings 'mtgbrew.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, '/deck-search.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: /deck-search.html
+[02/Sep/2016 15:56:30] "GET / HTTP/1.1" 500 82849
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, '/deck-search.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: /deck-search.html
+[02/Sep/2016 15:56:31] "GET / HTTP/1.1" 500 82849
+Not Found: /deck-search
+[02/Sep/2016 15:59:09] "GET /deck-search HTTP/1.1" 404 2189
+[02/Sep/2016 15:59:20] "GET /deck-builder HTTP/1.1" 301 0
+Internal Server Error: /deck-builder/
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 10, in deck_builder
+    return render(request, 'brew/deck-builder.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: brew/deck-builder.html
+[02/Sep/2016 15:59:20] "GET /deck-builder/ HTTP/1.1" 500 83322
+[02/Sep/2016 16:06:18] "GET /admin/ HTTP/1.1" 302 0
+[02/Sep/2016 16:06:18] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 1653
+[02/Sep/2016 16:06:18] "GET /static/admin/css/base.css HTTP/1.1" 200 15937
+[02/Sep/2016 16:06:18] "GET /static/admin/css/login.css HTTP/1.1" 200 1203
+[02/Sep/2016 16:06:18] "GET /static/admin/css/fonts.css HTTP/1.1" 200 423
+[02/Sep/2016 16:06:18] "GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 80304
+[02/Sep/2016 16:06:18] "GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 81348
+Internal Server Error: /deck-builder/
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 10, in deck_builder
+    return render(request, 'brew/deck-builder.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: brew/deck-builder.html
+[02/Sep/2016 16:06:25] "GET /deck-builder/ HTTP/1.1" 500 84047
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 02, 2016 - 15:56:27
+Django version 1.10.1, using settings 'mtgbrew.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Internal Server Error: /deck-builder/
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 10, in deck_builder
+    return render(request, 'deck-builder.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: deck-builder.html
+[02/Sep/2016 16:06:48] "GET /deck-builder/ HTTP/1.1" 500 84096
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/exception.py", line 39, in inner
+    response = get_response(request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 187, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/handlers/base.py", line 185, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/andrew/MTGBrew/brew/views.py", line 7, in search
+    return render(request, 'deck-search.html')
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/shortcuts.py", line 30, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 67, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/template/loader.py", line 25, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+TemplateDoesNotExist: deck-search.html
+[02/Sep/2016 16:06:53] "GET / HTTP/1.1" 500 84199
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 02, 2016 - 16:06:47
+Django version 1.10.1, using settings 'mtgbrew.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Traceback (most recent call last):
+  File "manage.py", line 22, in <module>
+    execute_from_command_line(sys.argv)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/__init__.py", line 367, in execute_from_command_line
+    utility.execute()
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/core/management/__init__.py", line 316, in execute
+    settings.INSTALLED_APPS
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/conf/__init__.py", line 53, in __getattr__
+    self._setup(name)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/conf/__init__.py", line 41, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/home/andrew/.virtualenvs/mtg-brew/local/lib/python2.7/site-packages/django/conf/__init__.py", line 97, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+  File "/usr/lib/python2.7/importlib/__init__.py", line 37, in import_module
+    __import__(name)
+  File "/home/andrew/MTGBrew/mtgbrew/settings.py", line 57, in <module>
+    'DIRS': [normpath(join(SITE_ROOT, 'templates')),],
+NameError: name 'normpath' is not defined

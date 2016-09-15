@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from brew import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.search, name='search'),
+    url(r'^deck-builder/', views.deck_builder, name ='deck-builder'),
 ]

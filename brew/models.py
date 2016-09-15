@@ -1,7 +1,9 @@
 import datetime
 
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
@@ -9,28 +11,23 @@ from django.utils import timezone
 # Contains a series of Playset models for the mainboard and sideboard
 # Contains deck prices, and other important deck details
 # Check variable names for a description on the data contained in the Deck Model
-class Deck(models.Model)
-	deck_name = models.CharField(max_length=200)
-	deck_description = models.CharField(max_length=none)
-	last_edit_date = models.DateTimeField('Last Edited: ')
-	deck_price_online = models.DecimalField(max_digits=none, deicmal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
-	deck_price_paper = models.DecimalField(max_digits=none, deicmal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
-	deck_privacy = models.BinaryField()
-	looking_for_feedback = models.BinaryField()
-	deck_format = CharField(max_length=20)
-	deck_rating = IntegerField()
-	deck_tags = models.ArrayField()
 
+class Deck(models.Model):
+	GAME_FORMATS = (
+		('STD', 'Standard'),
+		('MDN', 'Modern'),
+		('LGC', 'Legacy'),
+		('VTG', 'Vintage'),
+		('EDH', 'Commander/EDH'),
+		('PAU', 'Pauper')
+	)
 
-class User(models.Model)
-	username = models.CharField(max_length=25)
-
-class Playset(models.Model)
-	card_name = models.CharField(max_length=50)
-	card_quantity = models.PositiveIntegerField(validators=[MaxValueValidator(Integer('4'))])
-	card_price_online = models.DecimalField(max_digits=none, deicmal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
-	card_price_paper = models.DecimalField(max_digits=none, deicmal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
-	card_printing = models.CharField(max_length=100)
-	card_condition = models.CharField(max_length=10)
-	card_foil = models.BinaryField()
-
+	deck_name = models.CharField(max_length=40)
+	deck_format = models.CharField(max_length=10, choices=GAME_FORMATS)
+	deck_price_paper = models.IntegerField(validators=[MinValueValidator(0)])
+	deck_price_online = models.IntegerField(validators=[MinValueValidator(0)])
+	deck_privacy = models.BooleanField()
+	deck_need_feedback = models.BooleanField()
+	deck_rating	= models.IntegerField()
+	deck_last_edited = models.DateTimeField()
+	deck_tags = ArrayField(models.CharField(max_length=15), null=True, blank=True)
