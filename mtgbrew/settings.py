@@ -38,13 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Web App
     'brew',
+
+    # Third Party
     'bootstrap3',
     'jquery',
     'crispy_forms',
     'debug_toolbar',
     'floppyforms',
     'haystack',
+    'tagging',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [

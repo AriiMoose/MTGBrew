@@ -3,23 +3,13 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
+from forms import DeckForm
 
 # Create your views here.
 def search(request):
 	return render(request, 'brew/deck-search.html')
 
+@login_required
 def deck_builder(request):
-	return render(request, 'brew/deck-builder.html')
-
-#def user_login_register(request):
-
-	# Log the user in
-	#user = authenticate(username=username, password=password)
-
-	#if user is not None:
-		# Login successful
-		# Redirect
-
-	#else:
-		# Login invalid
-		# Display error
+	form = DeckForm()
+	return render(request, 'brew/deck-builder.html', {'form': form})

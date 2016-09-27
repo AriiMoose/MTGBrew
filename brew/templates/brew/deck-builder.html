@@ -3,69 +3,82 @@
 
 {# Import Style Sheet for Deck Searching #}
 {% load static %}
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'brew/search.css' %}" />
 <div class="container">
 
+<form method="POST" class="deck-form">
+	{% csrf_token %}	
 	<div name="deck-info" class="jumbotron">
+	
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<h4>Deck Details</h4>
+			<div class="row">
 
-		<div class="row">
+				{# Deck Name #}
+				<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">Deck Name</span>
+						<input type="text" name="deck-name" class="form-control" placeholder="Your Awesome Deck Name">
+					</div><!-- /.input-group -->
+				</div><!-- /.col -->
 
-			{# Deck Name #}
-			<div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
-				<div class="input-group input-group-md">
-					<span class="input-group-addon">Deck Name</span>
-					<input type="text" name="deck-name" class="form-control" placeholder="Your Awesome Deck Name">
-				</div><!-- /.input-group -->
+			</div><!-- /.row -->
+
+			<div class="row">
+
+				{# Deck Tags #}
+				<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+					<div class="input-group input-group-md">
+						<span class="input-group-addon">Tags</span>
+						<input type="text" name="deck-name" class="form-control" placeholder="Separate tags with commas">
+					</div><!-- /.input-group -->
+				</div> <!-- /.col -->
+
+			</div><!-- /.row -->
+
+			<br><br>
+
+			<div class="row">
+
+				{# Format Selector #}	
+				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+					<div class="format-group">
+					<label for="format-selection">Format:</label>
+					{{form.deck_format}}
+					</div><!-- /.format-group -->
+				</div><!-- /.col -->
+
+			</div><!-- /.row -->
+			
+			<br><br>
+
+			<h4>Deck Options</h4>
+			<div class="row">
+
+				{# Is Deck Private #}
+				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+					<div class="input-group input-group-md">
+						<label><input type="checkbox" name="is-private" value="Private"> Is Private</label>
+					</div><!-- /.input-group -->
+				</div><!-- /.col -->
+
+				{# Looking For Feedback #}
+				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+					<div class="input-group input-group-md">
+						<label><input type="checkbox" name="need-feedback" value="Feedback"> Needs Feedback</label>
+					</div><!-- /.input-group -->
+				</div><!-- /.col -->
+
+			</div><!-- /.row -->
 			</div><!-- /.col -->
 
-		</div><!-- /.row -->
-
-		<br><br><br>
-		
-		<div class="row">
-
-			{# Format Selector #}
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-				<div class="format-group">
-				<label for="format-selection">Format:</label>
-				<select class="format-control">
-					<option>Standard</option>
-					<option>Modern</option>
-					<option>Legacy</option>
-					<option>Vintage</option>
-					<option>Commander/EDH</option>
-					<option>Pauper</option>
-				</select>
-				</div><!-- /.format-group -->
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<h4>Description</h4>
+				{{form.deck_description}}
 			</div><!-- /.col -->
-
-			{# Deck Tags #}
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-				<div class="input-group input-group-md">
-					<span class="input-group-addon">Tags</span>
-					<input type="text" name="deck-name" class="form-control" placeholder="Separate tags with commas">
-				</div><!-- /.input-group -->
-			</div>
-
-		</div><!-- /.row -->
-
-		<div class="row">
-
-			{# Is Deck Private #}
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-				<div class="input-group input-group-md">
-					<label><input type="checkbox" name="is-private" value="Private"> Is Private</label>
-				</div><!-- /.input-group -->
-			</div><!-- /.col -->
-
-			{# Looking For Feedback #}
-			<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-				<div class="input-group input-group-md">
-					<label><input type="checkbox" name="need-feedback" value="Feedback"> Looking For Feedback</label>
-				</div><!-- /.input-group -->
-			</div><!-- /.col -->
-
-		</div><!-- /.row -->
+	</div><!-- /.row -->
 
 	</div><!-- /.jumbotron -->
 
@@ -74,25 +87,19 @@
 
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 			<div name="deck-contents" class="jumbotron">
-				Deck Description
+				<h4>Deck List</h4>
+				<textarea style="resize:none" cols="25" rows="20"></textarea>
 			</div><!-- /.jumbotron -->
 		</div><!-- /.col -->
 
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div name="deck-contents" class="jumbotron">
-				Deck List
-			</div><!-- /.jumbotron -->
-		</div><!-- /.col -->
-
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div name="deck-contents" class="jumbotron">
-				Single Card Add
+			<div name="add-single" class="jumbotron">
+				<h4>Single Add</h4>
 			</div><!-- /.jumbotron -->
 		</div><!-- /.col -->
 
 	</div><!-- /.row -->
-
-
 </div>
-
+</form>
+{{form.media}}
 {% endblock %}

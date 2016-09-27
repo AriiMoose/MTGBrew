@@ -1,9 +1,14 @@
 import datetime
 
 from django.db import models
+from django.forms import ModelForm
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
+from django.conf import settings
+
+from tagging.registry import register
+from tagging.fields import TagField
 
 # Create your models here.
 
@@ -12,16 +17,16 @@ from django.contrib.postgres.fields import ArrayField
 # Contains deck prices, and other important deck details
 # Check variable names for a description on the data contained in the Deck Model
 
-class Deck(models.Model):
-	GAME_FORMATS = (
+GAME_FORMATS = (
 		('STD', 'Standard'),
 		('MDN', 'Modern'),
 		('LGC', 'Legacy'),
 		('VTG', 'Vintage'),
 		('EDH', 'Commander/EDH'),
-		('PAU', 'Pauper')
+		('PAU', 'Pauper'),
 	)
 
+class Deck(models.Model):
 	deck_name = models.CharField(max_length=40)
 	deck_format = models.CharField(max_length=10, choices=GAME_FORMATS)
 	deck_price_paper = models.IntegerField(validators=[MinValueValidator(0)])
@@ -30,5 +35,26 @@ class Deck(models.Model):
 	deck_need_feedback = models.BooleanField()
 	deck_rating	= models.IntegerField()
 	deck_last_edited = models.DateTimeField()
-	deck_tags = ArrayField(models.CharField(max_length=15), null=True, blank=True)
-	
+	deck_tags = TagField()
+	deck_description = models.CharField(max_length=1000, default="Enter description here")
+	decklist_mainboard = models.CharField(default=  "Please place each card on a new line. \n"
+													"Formating Sample: \n"
+													"4x Storm Crow \n"
+													"4x Doom Blade",
+											max_length=100)
+	decklist_sideboard = models.CharField(default=  "Please place each card on a new line. \n"
+													"Formating Sample: \n"
+													"4x Storm Crow \n"
+													"4x Doom Blade",
+											max_length=15)
+	deck_owner = models.ForeignKey(settings.AUTH_USER_MODEL, default=None)
+	def __str__(self):
+		return self.name
+
+class DeckForm(ModelForm):
+	class Meta:
+		model = Deck
+		fields = [	'deck_name', 'deck_format', 'deck_description', 'deck_privacy', 'deck_need_feedback', 
+					'deck_tags', 'decklist_mainboard', 'decklist_sideboard']
+
+register(Deck)
