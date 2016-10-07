@@ -23,5 +23,4 @@ urlpatterns = [
     url(r'^$', views.search, name='search'),
     url(r'^deck-builder/', views.deck_builder, name ='deck-builder'),
     url(r'^accounts/', include('registration.backends.default.urls')),
-    url(r'^summernote/', include('django_summernote.urls')),
 ]

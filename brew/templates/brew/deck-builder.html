@@ -4,16 +4,18 @@
 {# Import Style Sheet for Deck Searching #}
 {% load static %}
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="{% static 'js/bootstrap-tagsinput.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'brew/search.css' %}" />
+<link rel="stylesheet" href="{% static 'brew/bootstrap-tagsinput.css' %}">
 <div class="container">
 
 <form method="POST" class="deck-form">
 	{% csrf_token %}	
+	{{form.media}}
 	<div name="deck-info" class="jumbotron">
 	
 	<div class="row">
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h4>Deck Details</h4>
 			<div class="row">
 
 				{# Deck Name #}
@@ -32,13 +34,13 @@
 				<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
 					<div class="input-group input-group-md">
 						<span class="input-group-addon">Tags</span>
-						<input type="text" name="deck-name" class="form-control" placeholder="Separate tags with commas">
+						<input type="text" name="deck-tags" class="form-control" data-role="tagsinput" placeholder="Type a tag then press enter">
 					</div><!-- /.input-group -->
 				</div> <!-- /.col -->
 
 			</div><!-- /.row -->
 
-			<br><br>
+			<br>
 
 			<div class="row">
 
@@ -87,8 +89,26 @@
 
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 			<div name="deck-contents" class="jumbotron">
-				<h4>Deck List</h4>
-				<textarea style="resize:none" cols="25" rows="20"></textarea>
+
+				<ul  class="nav nav-pills">
+					<li class="active"><a  href="#mainboard" data-toggle="tab">Mainboard</a>
+					</li>
+					<li><a href="#sideboard" data-toggle="tab">Sideboard</a>
+					</li>
+				</ul>
+
+			<div class="tab-content clearfix">
+			  	<div class="tab-pane active" id="mainboard">
+          			<textarea style="resize:none" cols="25" rows="20"></textarea>
+				</div>
+				<div class="tab-pane" id="sideboard">
+          			<textarea style="resize:none" cols="25" rows="20"></textarea>
+				</div>
+			</div>
+
+			<br>
+			<button type="submit" class="save btn btn-default">Save Deck</button>
+			
 			</div><!-- /.jumbotron -->
 		</div><!-- /.col -->
 
@@ -100,6 +120,6 @@
 
 	</div><!-- /.row -->
 </div>
+
 </form>
-{{form.media}}
 {% endblock %}
