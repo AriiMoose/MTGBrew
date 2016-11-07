@@ -1,9 +1,22 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+# Django imports
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
-from forms import DeckForm
+from django.utils import timezone
+
+# Model imports
+from models import DeckForm
+
+# Python imports
+import urllib2
+
+# MTGO card data via Cardhoarder
+cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
+
+def calculate_deck_price_online():
+	pass
 
 # Create your views here.
 def search(request):
@@ -13,23 +26,36 @@ def search(request):
 def deck_builder(request):
 	if request.method == "POST":
 		# Save Data
-		form = DeckForm()
+		form = DeckForm(request.POST)
 
 		if form.is_valid():
-			# Save data from Form driven fields
-			deck = form.save(commit=false)
+			print("form is valid")
 
-			# Save Data from HTML driven fields
-			deck.deck_name = form.cleaned_up['deck-name']
-			deck.deck_tags = form.cleaned_up['deck-tags']
-			deck.deck_privacy = form.cleaned_up['is-private']
-			deck.deck_need_feedback = form.cleaned_up['need-feedback']
-			deck.deck_mainboard = form.cleaned_up['mainboard']
-			deck.deck_sideboard = form.cleaned_up['sideboard']
+			deck = form.save(commit=False)
+			deck.deck_price_paper = 0
+			deck.deck_price_online = 0
+			deck.deck_rating = 0
 			deck.deck_owner = request.user
 			deck.deck_last_edited = timezone.now()
+			deck.decklist_mainboard = "Placeholder Text"
+
+			mtgo_data = urllib2.urlopen(cardhoarder_data_url)
+
+			print(deck.deck_name)
+			print(deck.deck_tags)
+			print(deck.deck_format)
+			print(deck.deck_privacy)
+			print(deck.deck_need_feedback)
+			print(deck.decklist_mainboard.splitlines(0))
+			print(deck.decklist_sideboard)
+			print(deck.deck_description)
+			print(deck.deck_owner)
+			print(deck.deck_last_edited)
 
 			deck.save()
+
+		else:
+			print("form invalid")	
 
 	else:
 		# Load empty form
