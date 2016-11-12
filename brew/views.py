@@ -15,12 +15,13 @@ import urllib2
 # MTGO card data via Cardhoarder
 cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
 
-def calculate_deck_price_online():
-	pass
-
 # Create your views here.
 def search(request):
 	return render(request, 'brew/deck-search.html')
+
+def deck_view(request, pk):
+	deck = get_object_or_404(DeckForm, pk=pk)
+	return render(request, 'brew/deck-view.html', {'deck': deck})
 
 @login_required
 def deck_builder(request):
@@ -29,15 +30,10 @@ def deck_builder(request):
 		form = DeckForm(request.POST)
 
 		if form.is_valid():
-			print("form is valid")
-
 			deck = form.save(commit=False)
-			deck.deck_price_paper = 0
-			deck.deck_price_online = 0
 			deck.deck_rating = 0
 			deck.deck_owner = request.user
 			deck.deck_last_edited = timezone.now()
-			deck.decklist_mainboard = "Placeholder Text"
 
 			mtgo_data = urllib2.urlopen(cardhoarder_data_url)
 
@@ -46,8 +42,9 @@ def deck_builder(request):
 			print(deck.deck_format)
 			print(deck.deck_privacy)
 			print(deck.deck_need_feedback)
-			print(deck.decklist_mainboard.splitlines(0))
+			print(deck.decklist_mainboard)
 			print(deck.decklist_sideboard)
+			print(deck.deck_price_online)
 			print(deck.deck_description)
 			print(deck.deck_owner)
 			print(deck.deck_last_edited)
@@ -55,7 +52,7 @@ def deck_builder(request):
 			deck.save()
 
 		else:
-			print("form invalid")	
+			print("INVALID FORM")	
 
 	else:
 		# Load empty form

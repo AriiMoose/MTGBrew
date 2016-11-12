@@ -44,8 +44,8 @@ for line in card_data:
 class Deck(models.Model):
 	deck_name = models.CharField(max_length=100, blank=False)
 	deck_format = models.CharField(max_length=50, choices=GAME_FORMATS, blank=False)
-	deck_price_paper = models.IntegerField(validators=[MinValueValidator(0)])
-	deck_price_online = models.IntegerField(validators=[MinValueValidator(0)])
+	deck_price_paper = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+	deck_price_online = models.IntegerField(validators=[MinValueValidator(0)], default=0)
 	deck_privacy = models.BooleanField(blank=True)
 	deck_need_feedback = models.BooleanField(blank=True)
 	deck_rating	= models.IntegerField()
@@ -71,59 +71,47 @@ class DeckForm(ModelForm):
 		# Check that the mainboard actually contains cards
 		if mainboard_buffer == "" or mainboard_buffer == None:
 			raise ValidationError(_("Your mainboard must contain cards"), code='EmptyList')
-
 		else:
-			parsed_mainboard = mainboard_buffer.split('\n')
-
-			# Iterate through mainboard and check if card exists
-			for line in parsed_mainboard:
-				# Check if mainboard is formatted correctly
-				# If yes, check if card exists
-				# Else, raise an error
-				try:
-					current_card = str(line.split(" ", 1)[1]).strip()
-				except:
-					raise ValidationError("Please provide an amount for each card entry. Example: \n 1 Storm Crow")
-				else:
-					# Search vendor data for card
-					for sublist in card_data_by_line:
-						# If the card exists, grab it's dataset
-						if current_card in sublist:
-							verified_current_card = sublist
-							break
-
-					# If the card doesn't exist, return a Validation Error
-					# Else, find price, and add it to the total
-					if verified_current_card is None:
-						raise ValidationError("Cannot find card: " + current_card)
-					else:
-						print verified_current_card
+			self.parse_board(mainboard_buffer)
 
 		return mainboard_buffer
 
-	def parse_board(deck_board):
-		if deck_board_buffer == "" or deck_board_buffer == None:
-			raise ValidationError(_("Your decklist must contain cards"), code='EmptyList')
+	def clean_decklist_sideboard(self):
+		sideboard_buffer = self.cleaned_data.get('decklist_sideboard')
 
+		# Verify that the sideboard contains cards
+		if sideboard_buffer == "" or sideboard_buffer == None:
+			return sideboard_buffer
 		else:
-			parsed_deck_board = deck_board_buffer.split('\n')
+			self.parse_board(sideboard_buffer)
 
-			# Iterate through mainboard and check if card exists
-			for line in parsed_deck_board:
-				# Check if mainboard is formatted correctly
-				# If yes, check if card exists
-				# Else, raise an error
-				try:
-					current_card = str(line.split(" ", 1)[1]).strip()
-				except:
-					raise ValidationError("Please provide an amount for each card entry. Example: \n 1 Storm Crow")
+		return sideboard_buffer
+
+	def parse_board(self, deck_board):
+		parsed_deck_board = deck_board.split('\n')
+
+		# Iterate through mainboard and check if card exists
+		for line in parsed_deck_board:
+			# Check if mainboard is formatted correctly
+			# If yes, check if card exists
+			# Else, raise an error
+			try:
+				current_card = str(line.split(" ", 1)[1]).strip()
+				current_card_quantity = int(line.split(" ", 1)[0])
+			except:
+				raise ValidationError("Please provide an amount for each card entry. Example: \n 1 Storm Crow")
+			else:
+				# Search vendor data for card
+				for sublist in card_data_by_line:
+					# If the card exists, grab it's dataset
+					if current_card.lower() in (sublist_card.lower() for sublist_card in sublist):
+						verified_current_card = sublist
+						break
+
+				# If the card doesn't exist, return a Validation Error
+				# Else, find price, and add it to the total
+				if verified_current_card is None:
+					raise ValidationError("Cannot find card: " + current_card)
 				else:
-					if current_card in [elem for sublist in card_data_by_line for elem in sublist]:
-						print elem
-					else:
-						print "Could not find card"
-						raise ValidationError("Cannot find card: " + current_card)
-
-		return deck_board_buffer
-
+					self.instance.deck_price_online += float(verified_current_card[5]) * current_card_quantity
 register(Deck)
