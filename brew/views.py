@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 
 # Model imports
-from models import DeckForm
+from models import DeckForm, Deck
 
 # Python imports
 import urllib2
@@ -20,7 +20,7 @@ def search(request):
 	return render(request, 'brew/deck-search.html')
 
 def deck_view(request, pk):
-	deck = get_object_or_404(DeckForm, pk=pk)
+	deck = get_object_or_404(Deck, pk=pk)
 	return render(request, 'brew/deck-view.html', {'deck': deck})
 
 @login_required
@@ -50,6 +50,8 @@ def deck_builder(request):
 			print(deck.deck_last_edited)
 
 			deck.save()
+
+			return redirect('deck-view', pk=deck.pk)
 
 		else:
 			print("INVALID FORM")	

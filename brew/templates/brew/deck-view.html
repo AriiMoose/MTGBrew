@@ -4,4 +4,38 @@
 {# Import Style Sheet for Deck Searching #}
 {% load static %}
 
+<div class="container">
+<div class="deck-details">
+
+	{# Contains basic deck info. E.G: Name, author, price etc #}
+	{# Aligned top-left #}
+	<div class="deck-header">
+
+		<div class="row" style="clear: both">
+			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				<h2 style="float: left">{{deck.deck_name}}</h2>
+				<h4 style="float: right">{{deck.deck_owner}}</h4>
+			</div>
+		</div>
+
+	</div> <!-- ./deck-header -->
+
+	{# Displays the deck list. Formattign determined by widget in deck-header #}
+	{# Has affiliate links located underneath #}
+	{# Aligned mid-left #}
+	<div class="deck-list">
+	</div>
+
+	{# Graphs showing mana curve and colour distrubtion #}
+	{# Aligned mid-right #}
+	<div class="deck-stats">
+	</div>
+
+	{# Contains the description for the deck #}
+	<div class="deck-description">		
+	</div>
+
+</div> <!-- ./deck-details -->
+</div> <!-- ./container -->
+
 {% endblock %}
