@@ -3,6 +3,9 @@
 
 {# Import Style Sheet for Deck Searching #}
 {% load static %}
+<script src="http://tappedout.net/tappedout.js"></script>
+<link rel="stylesheet" href="{% static 'brew/bootstrap-tagsinput.css' %}">
+<link rel="stylesheet" href="{% static 'brew/decklist-formatting.css' %}">
 
 <div class="container">
 <div class="deck-details">
@@ -11,28 +14,70 @@
 	{# Aligned top-left #}
 	<div class="deck-header">
 
-		<div class="row" style="clear: both">
+		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<h2 style="float: left">{{deck.deck_name}}</h2>
-				<h4 style="float: right">{{deck.deck_owner}}</h4>
+				<h2>{{ deck.deck_name }} <small>by {{ deck.deck_owner }}</small></h2>
+			</div> <!-- Deck Name & Author -->
+		</div> <!-- Heading -->
+
+		<div class="row">
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+				<p>Deck Price (Online): {{ deck.deck_price_online }} </p>
 			</div>
-		</div>
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+				<p>Deck Price (Paper): {{ deck.deck_price_paper }} </p>
+			</div>
+		</div> <!-- Deck Prices -->
+
+		<div class="row">
+			<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+				<p>{{deck.get_deck_format_display}}</p>
+			</div>
+			<div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+				<p>Tags: {{deck.deck_tags}}</p>
+			</div>
+		</div><!-- Format & Tags -->
 
 	</div> <!-- ./deck-header -->
 
 	{# Displays the deck list. Formattign determined by widget in deck-header #}
 	{# Has affiliate links located underneath #}
 	{# Aligned mid-left #}
-	<div class="deck-list">
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="deck-list">
+				{{deck.decklist_mainboard}}
+
+				Sideboard|sideboard|Sideboard:
+				{{deck.decklist_sideboard}}
+			</div>
+		</div>
+
+		<div class="col-lg-6">
+			{{cardtype_chart|safe}}
+		</div>
 	</div>
 
 	{# Graphs showing mana curve and colour distrubtion #}
 	{# Aligned mid-right #}
 	<div class="deck-stats">
+
+	</div>
+
+	<div class="row">
+		<div class="col-lg-6">
+			<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo">
+
+
+				<button type="submit" class="btn btn-warning"> Buy on Cardhoarder: {{deck.deck_price_online}} TIX </button>
+			</form>
+		</div>
 	</div>
 
 	{# Contains the description for the deck #}
-	<div class="deck-description">		
+	<div name="deck-description" class="jumbotron">
+		<h3>Description</h3>
+		{{deck.deck_description}}		
 	</div>
 
 </div> <!-- ./deck-details -->

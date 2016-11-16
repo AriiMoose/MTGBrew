@@ -34,15 +34,22 @@ GAME_FORMATS = (
 	)
 
 cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
+isleofcards_data_url = "https://www.isleofcards.com/files/prices.txt"
+paper_data = urllib2.urlopen(isleofcards_data_url)
 mtgo_data = urllib2.urlopen(cardhoarder_data_url)
 card_data = set(mtgo_data.read().splitlines())
+paper_card_data = set(paper_data.read().splitlines())
+paper_data_by_line = []
 card_data_by_line = []
 
 for line in card_data:
 	card_data_by_line.append(line.split('\t'))
 
+for line in paper_card_data:
+	paper_data_by_line.append(line.split('\t'))
+
 class Deck(models.Model):
-	deck_name = models.CharField(max_length=100, blank=False)
+	deck_name = models.CharField(max_length=200, blank=False)
 	deck_format = models.CharField(max_length=50, choices=GAME_FORMATS, blank=False)
 	deck_price_paper = models.IntegerField(validators=[MinValueValidator(0)], default=0)
 	deck_price_online = models.IntegerField(validators=[MinValueValidator(0)], default=0)
@@ -52,8 +59,8 @@ class Deck(models.Model):
 	deck_last_edited = models.DateTimeField()
 	deck_tags = TagField(blank=True)
 	deck_description = models.CharField(max_length=5000, blank=False)
-	decklist_mainboard = models.CharField(max_length=500, blank=False)
-	decklist_sideboard = models.CharField(max_length=500, blank=True)
+	decklist_mainboard = models.CharField(max_length=1000, blank=False)
+	decklist_sideboard = models.CharField(max_length=1000, blank=True)
 	deck_owner = models.ForeignKey(settings.AUTH_USER_MODEL, default=None)
 
 class DeckForm(ModelForm):
