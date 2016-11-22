@@ -12,6 +12,7 @@ from models import DeckForm, Deck
 # Python imports
 import urllib2
 import json
+from operator import itemgetter
 
 # Python library imports
 import pygal
@@ -31,6 +32,7 @@ def deck_view(request, pk):
 	deck = get_object_or_404(Deck, pk=pk)
 
 	# Get card data for decklist
+	# Counters for card types
 	creature_count = 0
 	enchantment_count = 0
 	instant_count = 0
@@ -39,65 +41,114 @@ def deck_view(request, pk):
 	sorcery_count = 0
 	land_count = 0
 
-	parsed_mainboard = deck.decklist_mainboard.split('\n')
+	card_type_counts = {"Creature": 0,
+				"Enchantment": 0,
+				"Instant": 0,
+				"Artifact": 0,
+				"Planeswalker": 0,
+				"Sorcery": 0,
+				"Land": 0}
 
-	for line in parsed_mainboard:
+	# List of all CMCs
+	deck_cmc_list = []
+
+	# Dictionary containing list of color-sorted CMCs
+	card_cmc_lists = { "W": [],
+				"U": [],
+				"B": [],
+				"R": [],
+				"G": [],
+				"C": []}
+
+	parsed_decklist = deck.decklist_mainboard.split('\n')
+
+	for line in parsed_decklist:
 		if line is not "" or line is not None:
 			
 			current_card = str(line.split(" ", 1)[1]).strip()
+			current_card_quantity = int(line.split(" ", 1)[0])
 
-			# Check card for types and aggregate
-			if u"Creature" in mtgjson_data[current_card]['types']:
-				creature_count = creature_count + 1
-			
-			if u"Instant" in mtgjson_data[current_card]['types']:
-				instant_count = instant_count + 1
+			for key, value in card_type_counts.iteritems():
+				if key in mtgjson_data[current_card]['types']:
+					card_type_counts[key] += current_card_quantity
 
-			if u"Sorcery" in mtgjson_data[current_card]['types']:
-				sorcery_count = sorcery_count + 1
-
-			if u"Enchantment" in mtgjson_data[current_card]['types']:
-				enchantment_count = enchantment_count + 1
-
-			if u"Land" in mtgjson_data[current_card]['types']:
-				land_count = land_count + 1
-
-			if u"Artifact" in mtgjson_data[current_card]['types']:
-				artifact_count = artifact_count + 1
-
-			if u"Planeswalker" in mtgjson_data[current_card]['types']:
-				planeswalker_count = planeswalker_count + 1
-			
-		else:
-			print "Empty line"
-
+			# Check for card colours and aggregate 
+			# Check if card has Color Identity to account for lands 
+			if 'Land' not in mtgjson_data[current_card]['types']:
+				# If the card has a color ID then proceed
+				# Otherwise, it's colorless
+				if mtgjson_data[current_card].has_key('colorIdentity'):	
+					for key, value in card_cmc_lists.iteritems():		
+						if key in mtgjson_data[current_card]['colorIdentity']:
+							# Attempt to retreive the CMC
+							# If no CMC, set CMC to 0
+							try:
+								current_card_cmc = mtgjson_data[current_card]['cmc']
+								deck_cmc_list.append(current_card_cmc)
+								cmc_info = (current_card_cmc, current_card_quantity)
+								card_cmc_lists[key].append(cmc_info)
+							except:
+								current_card_cmc = 0
+								deck_cmc_list.append(current_card_cmc)
+								cmc_info = (current_card_cmc, current_card_quantity)
+								card_cmc_lists[key].append(cmc_info)
+				else:
+					print str(current_card) + " is colorless"
+					try:
+						current_card_cmc = mtgjson_data[current_card]['cmc']
+						deck_cmc_list.append(current_card_cmc)
+						cmc_info = (current_card_cmc, current_card_quantity)
+						card_cmc_lists['C'].append(cmc_info)
+					except:
+						current_card_cmc = 0
+						deck_cmc_list.append(current_card_cmc)
+						cmc_info = (current_card_cmc, current_card_quantity)
+						card_cmc_lists['C'].append(cmc_info)
 
 	# Create chart of card types
 	cardtype_piechart = pygal.Pie()
 	cardtype_piechart.title = "Card Type Breakdown"
 
-	if instant_count > 0:
-		cardtype_piechart.add('Instant', instant_count)
+	for key, value in card_type_counts.iteritems():
+		if value > 0:
+			cardtype_piechart.add(key, value)
 
-	if sorcery_count > 0:
-		cardtype_piechart.add('Sorcery', sorcery_count)
+	# Create CMC bar chart
+	deck_cmc_list.sort()
+	
 
-	if enchantment_count > 0:
-		cardtype_piechart.add('Enchantment', enchantment_count)
+	# Check CMC values from min CMC to max CMC in list
+	# CMC values in decks go from 0 to x
+	# This reflects the order for elements in a list
+	def sort_cmc_by_color(color):
+		new_cmc = []
+		for i in range(0, (deck_cmc_list[-1] + 1)):
+			# Create empty entry for insertion
+			new_cmc.append(None)
+			# Check if any CMCs match the current CMC value to check
+			for cmc in card_cmc_lists[color]:
+				# If a match is found, try to add to current CMC count
+				# Otherwise, insert value as initial count
+				if cmc[0] == i:
+					try:
+						new_cmc[i] += cmc[1]
+					except:
+						new_cmc[i] = cmc[1]
 
-	if creature_count > 0:
-		cardtype_piechart.add('Creature', creature_count)
+		return new_cmc
 
-	if planeswalker_count > 0:
-		cardtype_piechart.add('Planeswalker', planeswalker_count)
 
-	if artifact_count > 0:
-		cardtype_piechart.add('Artifact', artifact_count)
+	cmc_barchart = pygal.StackedBar()
+	cmc_barchart.title = "Mana Curve"
+	cmc_barchart.x_labels = map(str, range(0, deck_cmc_list[-1] + 1))
+	cmc_barchart.add("White", sort_cmc_by_color("W"))
+	cmc_barchart.add("Blue", sort_cmc_by_color("U"))
+	cmc_barchart.add("Black", sort_cmc_by_color("B"))
+	cmc_barchart.add("Red", sort_cmc_by_color("R"))
+	cmc_barchart.add("Green", sort_cmc_by_color("G"))
+	cmc_barchart.add("Colorless", sort_cmc_by_color("C"))
 
-	if land_count > 0:
-		cardtype_piechart.add('Lands', land_count)
-
-	return render(request, 'brew/deck-view.html', {'deck': deck, 'cardtype_chart': cardtype_piechart.render()})
+	return render(request, 'brew/deck-view.html', {'deck': deck, 'cardtype_chart': cardtype_piechart.render(), 'cmc_chart': cmc_barchart.render()})
 
 @login_required
 def deck_builder(request):
@@ -110,20 +161,6 @@ def deck_builder(request):
 			deck.deck_rating = 0
 			deck.deck_owner = request.user
 			deck.deck_last_edited = timezone.now()
-
-			mtgo_data = urllib2.urlopen(cardhoarder_data_url)
-
-			print(deck.deck_name)
-			print(deck.deck_tags)
-			print(deck.deck_format)
-			print(deck.deck_privacy)
-			print(deck.deck_need_feedback)
-			print(deck.decklist_mainboard)
-			print(deck.decklist_sideboard)
-			print(deck.deck_price_online)
-			print(deck.deck_description)
-			print(deck.deck_owner)
-			print(deck.deck_last_edited)
 
 			deck.save()
 
