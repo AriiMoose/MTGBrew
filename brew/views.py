@@ -16,6 +16,7 @@ from operator import itemgetter
 
 # Python library imports
 import pygal
+from pygal.style import Style
 
 # MTGO card data via Cardhoarder
 cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
@@ -23,6 +24,12 @@ cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
 # Load MTGJSON into memory
 mtgjson_filepath = "brew/static/brew/AllCards.json"
 mtgjson_data = json.load(open(mtgjson_filepath))
+
+# Chart Styles
+mtg_colour_style = Style(
+	transition='400ms ease-in',
+  	colors=('#fff6aa', '#308af2', '#000000', '#e20f0f', '#29bc1c', '#9b744a')
+  	)
 
 # Create your views here
 def search(request):
@@ -153,7 +160,7 @@ def deck_view(request, pk):
 		if value > 0:
 			cardtype_piechart.add(key, value)
 
-	cardcolor_piechart = pygal.Pie()
+	cardcolor_piechart = pygal.Pie(style=mtg_colour_style)
 	cardcolor_piechart.title = "Deck Colours Breakdown"
 
 	for key, value in card_colour_distribtuion.iteritems():
@@ -172,7 +179,7 @@ def deck_view(request, pk):
 				cardcolor_piechart.add("Colorless", value)
 
 	# Create CMC bar chart
-	cmc_barchart = pygal.StackedBar()
+	cmc_barchart = pygal.StackedBar(style=mtg_colour_style)
 	cmc_barchart.title = "Mana Curve"
 	cmc_barchart.x_labels = map(str, range(0, deck_cmc_list[-1] + 1))
 	cmc_barchart.add("White", sort_cmc_by_color("W"))
