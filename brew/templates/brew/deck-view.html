@@ -54,6 +54,7 @@
 		</div>
 
 		<div class="col-lg-6">
+			{{cardcolor_chart|safe}}
 			{{cardtype_chart|safe}}
 			{{cmc_chart|safe}}
 		</div>
@@ -67,7 +68,7 @@
 
 	<div class="row">
 		<div class="col-lg-6">
-			<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo">
+			<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
 
 
 				<button type="submit" class="btn btn-warning"> Buy on Cardhoarder: {{deck.deck_price_online}} TIX </button>
