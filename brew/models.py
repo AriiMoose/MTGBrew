@@ -16,6 +16,7 @@ import json
 import re
 import time
 import urllib2
+from redactor.fields import RedactorField
 
 # Create your models here.
 
@@ -58,7 +59,7 @@ class Deck(models.Model):
 	deck_rating	= models.IntegerField()
 	deck_last_edited = models.DateTimeField()
 	deck_tags = TagField(blank=True)
-	deck_description = models.CharField(max_length=5000, blank=False)
+	deck_description = RedactorField(verbose_name=u'Deck Description')
 	decklist_mainboard = models.CharField(max_length=1000, blank=False)
 	decklist_sideboard = models.CharField(max_length=1000, blank=True)
 	deck_owner = models.ForeignKey(settings.AUTH_USER_MODEL, default=None)

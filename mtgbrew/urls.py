@@ -21,6 +21,7 @@ from brew import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^redactor/', include('redactor.urls')),
     url(r'^$', views.search, name='search'),
     url(r'^deck-builder/', views.deck_builder, name ='deck-builder'),
     url(r'^deck/(?P<pk>\d+)/$', views.deck_view, name ='deck-view'),

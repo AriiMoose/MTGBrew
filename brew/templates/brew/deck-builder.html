@@ -6,6 +6,20 @@
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="{% static 'js/bootstrap-tagsinput.js' %}"></script>
 <script src="http://tappedout.net/tappedout.js"></script>
+
+<!-- Script to disable Enter key for form submission -->
+<script type="text/javascript">
+
+function stopRKey(evt) {
+  var evt = (evt) ? evt : ((event) ? event : null);
+  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
+}
+
+document.onkeypress = stopRKey;
+
+</script> 
+
 <link rel="stylesheet" type="text/css" href="{% static 'brew/search.css' %}" />
 <link rel="stylesheet" href="{% static 'brew/bootstrap-tagsinput.css' %}">
 <div class="container">
@@ -14,13 +28,15 @@
 	{% csrf_token %}	
 	{{form.media}}
 	
+	<h2>Deck Editor</h2>
+
 	<div name="deck-info" class="jumbotron">
 
 		{{form.non_field_errors}}
 
 		<div class="form-group row">
 			{# Deck Name #}
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+			<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
 			<div class="input-group input-group-md ">
 				<span class="input-group-addon">Deck Name</span>
 				<input id="deck_name" type="text" name="deck_name" class="form-control" placeholder="Give your deck an awesome name" value="{{ form.deck_name.value|default_if_none:'' }}">
@@ -28,43 +44,50 @@
 			</div>
 			{{form.deck_name.errors}}
 
-			{# Format Selector #}	
-			<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-			<div class="format-group">
-				<label for="format-selection">Format:</label>
-				{{form.deck_format}}
-			</div><!-- /.format-group -->
+			{# Buffer Column #}
+			<div class="col-lg-1 col-md-1">
 			</div>
-		</div><!-- /.form-group -->
 
-		<br>
+			{# Deck Format #}
+			<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+				<div class="format-group">
+					<label for="format-selection">Format:</label>
+					{{form.deck_format}}
+				</div><!-- /.format-group -->
+			</div>
 
-		{# Deck Tags #}
-		<div class="input-group input-group-md">
-			<span class="input-group-addon">Tags</span>
-			<input id="deck_tags" type="text" name="deck_tags" class="form-control" data-role="tagsinput" placeholder="Type a tag then press enter" value="{{ form.deck_tags.value|default_if_none:'' }}">
-		</div><!-- /.input-group -->
-		{{form.deck_tags.errors}}
+		</div><!-- Deck Name & Format -->
 
-		<br>
+		<div class="form-group row">
+			{# Deck Tags #}
+			<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+				<div class="input-group input-group-md">
+					<span class="input-group-addon">Tags</span>
+					<input id="deck_tags" type="text" name="deck_tags" class="form-control" data-role="tagsinput" value="{{ form.deck_tags.value|default_if_none:'' }}">
+				</div><!-- /.input-group -->
+				{{form.deck_tags.errors}}
+			</div>
 
-		
-		
-		<br><br>
+			<div class="col-lg-1 col-md-5">
+			</div>
 
-		<h4>Deck Options</h4>
+			{# Deck Privacy #}	
+			<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+				<div class="input-group input-group-md">
+				<label><input id="deck_privacy" type="checkbox" name="deck_privacy" value="Private"> Is Private</label>
+				</div><!-- /.input-group -->
+				{{form.deck_privacy.errors}}
+			</div>
 
-		{# Is Deck Private #}
-		<div class="input-group input-group-md">
-			<label><input id="deck_privacy" type="checkbox" name="deck_privacy" value="Private"> Is Private</label>
-		</div><!-- /.input-group -->
-		{{form.deck_privacy.errors}}
-
-		{# Looking For Feedback #}
-		<div class="input-group input-group-md">
-			<label><input id="deck_need_feedback" type="checkbox" name="deck_need_feedback" value="Feedback"> Needs Feedback</label>
-		</div><!-- /.input-group -->
-		{{form.deck_need_feedback.errors}}
+			{# Deck Looking For Feedback #}
+			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+				<div class="input-group input-group-md">
+				<label><input id="deck_need_feedback" type="checkbox" name="deck_need_feedback" value="Feedback"> Needs Feedback</label>
+				</div><!-- /.input-group -->
+				{{form.deck_need_feedback.errors}}
+			</div>
+			
+		</div> <!--Deck Tags, Privacy & Feedback -->
 
 	</div><!-- /.jumbotron -->
 
@@ -91,7 +114,16 @@
           			{{form.decklist_sideboard.error}}
 				</div>
 			</div>
+
+			<small>
+			Put each card entry on a new line. For example:
+			<br>
+			4 Storm Crow
+			<br>
+			2 Doom Blade
+			</small>
 			
+			<br>
 			<br>
 			<button type="submit" class="save btn btn-default">Save Deck</button>
 
@@ -99,10 +131,13 @@
 		</div><!-- /.col -->
 
 		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-			<div name="add-single" class="jumbotron">
+			<div name="deck-description" class="jumbotron">
 				<h4>Description</h4>
-				<textarea id="deck_description" name="deck_description" style="resize:none" cols="50" rows="10">{{ form.deck_description.value|default_if_none:'' }}</textarea>
-				{{form.deck_description.errors}}
+				{{form.deck_description}}
+
+				<small>
+				Deck descriptions are essential to getting other feedback, and informing others on how your deck functions. Make sure to mention how the deck works, wins, and what kind of feedback (if any) you are looking for.
+				</small>
 			</div><!-- /.jumbotron -->
 		</div><!-- /.col -->
 

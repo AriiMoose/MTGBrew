@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'floppyforms',
     'haystack',
     'tagging',
-    'ckeditor',
+    'redactor',
 ]
 
 MIDDLEWARE = [
