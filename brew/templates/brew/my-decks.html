@@ -3,12 +3,34 @@
 
 <div class="container">
 
-<div class="jumbotron" align="center">
+<div class="jumbotron">
 
-	<h3>List of decks</h3>
+	<h3>Your Decks</h3>
+
+	<br>
 
 	{% for deck in user_decks %}
-		<small>Found a deck</small>
+	<div class="row">
+		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+		<dl>
+			<dt> <a href="/deck/{{deck.pk}}">{{ deck.deck_name }}</a> </dt>
+			<dd> Price (Online): {{ deck.deck_price_online }} | Price (Paper): {{ deck.deck_price_paper }} </dd>
+			<dd> Tags: {{ deck.deck_tags }} </dd>
+		</dl>
+		</div>
+
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+			Format: {{ deck.get_deck_format_display }}
+		</div>
+
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+			<button type="button" class="btn btn-info">Edit</button>
+		</div>
+
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+			<button type="button" class="btn btn-danger">Delete</button>
+		</div>
+	</div>
 	{% endfor %}
 
 </div>

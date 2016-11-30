@@ -113,13 +113,22 @@ class DeckForm(ModelForm):
 				for sublist in card_data_by_line:
 					# If the card exists, grab it's dataset
 					if current_card.lower() in (sublist_card.lower() for sublist_card in sublist):
-						verified_current_card = sublist
+						verified_current_card_digital = sublist
 						break
+
+				for sublist in paper_data_by_line:
+					if current_card.lower() in (sublist_card.lower() for sublist_card in sublist):
+						verified_current_card_paper = sublist
 
 				# If the card doesn't exist, return a Validation Error
 				# Else, find price, and add it to the total
-				if verified_current_card is None:
+				if verified_current_card_digital is None:
 					raise ValidationError("Cannot find card: " + current_card)
 				else:
-					self.instance.deck_price_online += float(verified_current_card[5]) * current_card_quantity
+					self.instance.deck_price_online += float(verified_current_card_digital[5]) * current_card_quantity
+
+				if verified_current_card_paper is None:
+					raise ValidationError("Cannot find card: " + current_card)
+				else:
+					self.instance.deck_price_paper += float(verified_current_card_paper[5]) * current_card_quantity
 register(Deck)

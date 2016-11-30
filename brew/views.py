@@ -21,6 +21,7 @@ from pygal.style import Style
 
 # MTGO card data via Cardhoarder
 cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
+isleofcards_data_url = "https://www.isleofcards.com/files/prices.txt"
 
 # Load MTGJSON into memory
 mtgjson_filepath = "brew/static/brew/AllCards.json"

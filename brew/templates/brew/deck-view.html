@@ -67,11 +67,15 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-3">
 			<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
-
-
 				<button type="submit" class="btn btn-warning"> Buy on Cardhoarder: {{deck.deck_price_online}} TIX </button>
+			</form>
+		</div>
+
+		<div class="col-lg-3">
+			<form method="POST" action="https://www.isleofcards.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
+				<button type="submit" class="btn btn-success"> Buy on Isle of Cards: ${{deck.deck_price_paper}} </button>
 			</form>
 		</div>
 	</div>
