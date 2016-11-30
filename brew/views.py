@@ -8,6 +8,7 @@ from django.utils import timezone
 
 # Model imports
 from models import DeckForm, Deck
+from django.contrib.auth.models import User
 
 # Python imports
 import urllib2
@@ -34,6 +35,13 @@ mtg_colour_style = Style(
 # Create your views here
 def search(request):
 	return render(request, 'brew/deck-search.html')
+
+@login_required
+def my_decks(request, username):
+	current_user = User.objects.get(username=username)
+	user_decks = current_user.deck_set.all()
+
+	return render(request, 'brew/my-decks.html', {'user_decks': user_decks})
 
 def deck_view(request, pk):
 

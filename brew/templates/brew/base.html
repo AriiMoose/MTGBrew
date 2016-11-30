@@ -29,14 +29,14 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Deck Search <span class="sr-only">(current)</span></a></li>
+        <li><a href="/">Deck Search <span class="sr-only">(current)</span></a></li>
         <li><a href="/deck-builder/">Deck Builder</a></li>
         </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
-          <li><a href="=#">My Decks</a></li>
+          <li><a href="/{{request.user}}/my-decks">My Decks</a></li>
           <li><a href="#">My Account</a></li>
           <li><a href="{% url 'auth_logout' %}">Logout</a></li>
 
