@@ -13,7 +13,7 @@
 	{# Contains basic deck info. E.G: Name, author, price etc #}
 	{# Aligned top-left #}
 	<div class="deck-header">
-
+	<div class="row" name="content">
 		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				<h2>{{ deck.deck_name }} <small>by {{ deck.deck_owner }}</small></h2>
@@ -37,53 +37,50 @@
 				<p>Tags: {{deck.deck_tags}}</p>
 			</div>
 		</div><!-- Format & Tags -->
-
+	</div> <!-- Deck Header Row END -->
 	</div> <!-- ./deck-header -->
 
 	{# Displays the deck list. Formattign determined by widget in deck-header #}
 	{# Has affiliate links located underneath #}
 	{# Aligned mid-left #}
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="deck-list">
-				{{deck.decklist_mainboard}}
+	<div class="row" name="decklist-details">
+		<div class="col-lg-8">
+			<div class="row" name="decklist">
+				<div class="deck-list">
+					{{deck.decklist_mainboard}}
 
-				Sideboard|sideboard|Sideboard:
-				{{deck.decklist_sideboard}}
+					Sideboard|sideboard|Sideboard:
+					{{deck.decklist_sideboard}}
+				</div>
+			</div>
+
+			<div class="row" name="affiliate-links">
+				<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
+					<button type="submit" class="btn btn-warning"> Buy on Cardhoarder: {{deck.deck_price_online}} TIX </button>
+				</form>
+
+				<form method="POST" action="https://www.isleofcards.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
+					<button type="submit" class="btn btn-success"> Buy on Isle of Cards: ${{deck.deck_price_paper}} </button>
+				</form>
+			</div>
+
+			<div class="row" name="deck description">
+				<div class="well">
+					<h3>Description</h3>
+					{{deck.deck_description|safe}}	
+				</div>
 			</div>
 		</div>
 
-		<div class="col-lg-6">
-			{{cardcolor_chart|safe}}
-			{{cardtype_chart|safe}}
-			{{cmc_chart|safe}}
+		<div class="col-lg-4">
+			<div class="well">
+				<div class="row" name="color_chart">{{cardcolor_chart|safe}}</div>
+				<div class="row" name="type_chart">{{cardtype_chart|safe}}</div>
+				<div class="row" name="cmc_chart">{{cmc_chart|safe}}</div>
+			</div>
 		</div>
 	</div>
-
-	{# Graphs showing mana curve and colour distrubtion #}
-	{# Aligned mid-right #}
-	<div class="deck-stats">
-
-	</div>
-
-	<div class="row">
-		<div class="col-lg-3">
-			<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
-				<button type="submit" class="btn btn-warning"> Buy on Cardhoarder: {{deck.deck_price_online}} TIX </button>
-			</form>
-		</div>
-
-		<div class="col-lg-3">
-			<form method="POST" action="https://www.isleofcards.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
-				<button type="submit" class="btn btn-success"> Buy on Isle of Cards: ${{deck.deck_price_paper}} </button>
-			</form>
-		</div>
-	</div>
-
-	{# Contains the description for the deck #}
-	<div name="deck-description" class="jumbotron">
-		<h3>Description</h3>
-		{{deck.deck_description|safe}}		
+	</div><!-- End of deck contents & graphs-->
 	</div>
 
 </div> <!-- ./deck-details -->

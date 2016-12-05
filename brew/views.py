@@ -30,7 +30,21 @@ mtgjson_data = json.load(open(mtgjson_filepath))
 # Chart Styles
 mtg_colour_style = Style(
 	transition='400ms ease-in',
-  	colors=('#fff6aa', '#308af2', '#000000', '#e20f0f', '#29bc1c', '#9b744a')
+  	colors=('#fff6aa', '#308af2', '#000000', '#e20f0f', '#29bc1c', '#9b744a'),
+  	background="transparent",
+  	label_font_size=25,
+  	title_font_size=25,
+  	legend_font_size=25,
+  	tooltip_font_size=25
+  	)
+
+general_style = Style(
+	transition='400ms ease-in',
+  	background="transparent",
+  	label_font_size=25,
+  	title_font_size=25,
+  	legend_font_size=25,
+  	tooltip_font_size=25
   	)
 
 # Create your views here
@@ -147,7 +161,6 @@ def deck_view(request, pk):
 								cmc_info = (current_card_cmc, current_card_quantity)
 								card_cmc_lists[key].append(cmc_info)
 				else:
-					print str(current_card) + " is colorless"
 					try:
 						current_card_cmc = mtgjson_data[current_card]['cmc']
 						deck_cmc_list.append(current_card_cmc)
@@ -162,7 +175,7 @@ def deck_view(request, pk):
 	deck_cmc_list.sort()
 
 	# Create chart of card types
-	cardtype_piechart = pygal.Pie()
+	cardtype_piechart = pygal.Pie(style=general_style)
 	cardtype_piechart.title = "Card Type Breakdown"
 
 	for key, value in card_type_counts.iteritems():
