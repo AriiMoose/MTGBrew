@@ -56,7 +56,7 @@ def my_decks(request, username):
 	current_user = User.objects.get(username=username)
 	user_decks = current_user.deck_set.all()
 
-	return render(request, 'brew/my-decks.html', {'user_decks': user_decks})
+	return render(request, 'brew/my-decks.html', {'user_decks': user_decks, 'current_user': current_user})
 
 def deck_view(request, pk):
 

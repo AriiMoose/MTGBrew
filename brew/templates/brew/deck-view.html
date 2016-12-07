@@ -3,9 +3,10 @@
 
 {# Import Style Sheet for Deck Searching #}
 {% load static %}
-<script src="http://tappedout.net/tappedout.js"></script>
-<link rel="stylesheet" href="{% static 'brew/bootstrap-tagsinput.css' %}">
-<link rel="stylesheet" href="{% static 'brew/decklist-formatting.css' %}">
+<head>
+	<script src="{% static 'js/custom_tappedout_deckview.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'brew/decklist-formatting.css' %}">
+</head>
 
 <div class="container">
 <div class="deck-details">
@@ -16,7 +17,7 @@
 	<div class="row" name="content">
 		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				<h2>{{ deck.deck_name }} <small>by {{ deck.deck_owner }}</small></h2>
+				<h2>{{ deck.deck_name }} <small>by <a href="/{{ deck.deck_owner }}/my-decks">{{deck.deck_owner}}</a> </small></h2>
 			</div> <!-- Deck Name & Author -->
 		</div> <!-- Heading -->
 
@@ -40,7 +41,7 @@
 	</div> <!-- Deck Header Row END -->
 	</div> <!-- ./deck-header -->
 
-	{# Displays the deck list. Formattign determined by widget in deck-header #}
+	{# Displays the deck list. Formatting determined by widget in deck-header #}
 	{# Has affiliate links located underneath #}
 	{# Aligned mid-left #}
 	<div class="row" name="decklist-details">
@@ -55,13 +56,17 @@
 			</div>
 
 			<div class="row" name="affiliate-links">
+				<div class="col-sm-4">
 				<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
 					<button type="submit" class="btn btn-warning"> Buy on Cardhoarder: {{deck.deck_price_online}} TIX </button>
 				</form>
+				</div>
 
+				<div class="col-sm-4">
 				<form method="POST" action="https://www.isleofcards.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
 					<button type="submit" class="btn btn-success"> Buy on Isle of Cards: ${{deck.deck_price_paper}} </button>
 				</form>
+				</div>
 			</div>
 
 			<div class="row" name="deck description">

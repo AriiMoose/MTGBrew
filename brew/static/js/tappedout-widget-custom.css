@@ -1,0 +1,217 @@
+/* TappedOut Widget CSS */
+/* Remember to namespace EVERYTHING */
+
+.deck-list {
+    background-color: #d77575 !important;
+    white-space: normal;
+    color: inherit;
+    font: inherit;
+    border: inherit;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.deck-list .tappedOut {
+    margin: 0.5em;
+    /* background: rgba(0, 0, 0, 0.1); */
+    /* border: solid 1px #ccc; */
+}
+
+.deck-list .tappedOut .tappedout_title {
+    float: left;
+    font-size: 1.2em;
+    padding: 0.2em 0.3em;
+}
+.deck-list .tappedOut .tappedout_title select {
+    width: auto;
+}
+
+.deck-list .tappedOut ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1em;
+}
+
+.deck-list .tappedOut ul li {
+    margin: 0;
+}
+
+.deck-list .tappedOut h3 {
+    font-size: 1.1em;
+    padding: 0;
+    margin: 0.5em 0;
+}
+
+.deck-list .tappedOut .tappedout_header {
+    border-bottom: 2px solid #999;
+    padding: 0.5em;
+    text-align: right;
+    height: 3em;
+    vertical-align: baseline;
+}
+
+.deck-list .tappedOut .tappedout_body {
+    background-color: #d77575;
+    padding: 0.5em 0.5em 2em 0.5em;
+}
+
+/* Auto Clearfix */
+.deck-list .tappedOut .tappedout_body:after {
+    background-color: #d77575;
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.deck-list .tappedOut .tappedout_footer {
+    border-top: 1px solid #999;
+    padding: 0.2em 0.5em 0.5em 1em;
+    font-size: 0.8em;
+}
+
+.deck-list .tappedOut .tappedout-board-col {
+    float: left;
+    margin-right: 1em;
+}
+
+
+/* Borrowed from Boostrap */
+.deck-list .tappedOut .popover {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1010;
+    display:none;
+    max-width:276px;
+    text-align:left;
+    background-clip:padding-box;
+    border:1px solid rgba(0,0,0,.2);
+    border-radius:6px;
+    -webkit-box-shadow:0 5px 10px rgba(0,0,0,.2);
+    box-shadow:0 5px 10px rgba(0,0,0,.2);
+    white-space:normal;
+    /* custom */
+    padding:1px;
+    color: #ccc;
+    background: #000;
+    border: solid 1px #000;
+}
+
+.deck-list .tappedOut .popover.top {
+    margin-top:-10px;
+}
+
+.deck-list .tappedOut .popover.bottom {
+    margin-top:10px;
+}
+
+.deck-list .tappedOut .popover.left {
+    margin-left:-10px;
+}
+
+
+
+.deck-list .tappedOut .popover-title {
+    font-size:14px;
+    font-weight:400;
+    line-height:18px;
+    border-bottom:1px solid #ebebeb;
+    border-radius:5px 5px 0 0;
+    margin:0;
+    padding:8px 14px;
+    /* custom */
+    background: transparent;
+}
+.deck-list .tappedOut .popover-content {
+    padding: 2px 3px;
+    min-height: 285px;
+    min-width: 200px;
+}
+
+.deck-list .tappedOut .popover>.arrow,.popover>.arrow:after {
+    position:absolute;
+    display:block;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+}
+
+.deck-list .tappedOut .popover>.arrow {
+    border-width:11px;
+}
+
+.deck-list .tappedOut .popover>.arrow:after {
+    content:"";
+    border-width:10px;
+}
+
+
+.deck-list .tappedOut .popover.top>.arrow {
+    left:50%;
+    margin-left:-11px;
+    border-bottom-width:0;
+    border-top-color:rgba(0,0,0,.25);
+    bottom:-11px;
+}
+
+.deck-list .tappedOut .popover.top>.arrow:after {
+    content:" ";
+    bottom:1px;
+    margin-left:-10px;
+    border-bottom-width:0;
+    /* custom */
+    border-top-color: #000;
+}
+
+.deck-list .tappedOut .popover.right>.arrow {
+    top:50%;
+    left:-11px;
+    margin-top:-11px;
+    border-left-width:0;
+    border-right-color:rgba(0,0,0,.25);
+}
+
+.deck-list .tappedOut .popover.right>.arrow:after {
+    content:" ";
+    left:1px;
+    bottom:-10px;
+    border-left-width:0;
+    /* custom */
+    border-right-color:#000;
+}
+
+.deck-list .tappedOut .popover.bottom>.arrow {
+    left:50%;
+    margin-left:-11px;
+    border-top-width:0;
+    border-bottom-color:rgba(0,0,0,.25);
+    top:-11px;
+}
+
+.deck-list .tappedOut .popover.bottom>.arrow:after {
+    content:" ";
+    top:1px;
+    margin-left:-10px;
+    border-top-width:0;
+    /* custom */
+    border-bottom-color:#000;
+}
+
+.deck-list .tappedOut .popover.left>.arrow {
+    top:50%;
+    right:-11px;
+    margin-top:-11px;
+    border-right-width:0;
+    border-left-color:rgba(0,0,0,.25);
+}
+
+.deck-list .tappedOut .popover.left>.arrow:after {
+    content:" ";
+    right:1px;
+    border-right-width:0;
+    bottom:-10px;
+    /* custom */
+    border-left-color:#000;
+}

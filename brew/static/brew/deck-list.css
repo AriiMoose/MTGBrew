@@ -1,0 +1,8 @@
+.tappedout-body {
+    border: 1px solid red;
+    overflow: auto;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    padding-bottom: 3px;
+}
