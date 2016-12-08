@@ -27,10 +27,20 @@ isleofcards_data_url = "https://www.isleofcards.com/files/prices.txt"
 mtgjson_filepath = "brew/static/brew/AllCards.json"
 mtgjson_data = json.load(open(mtgjson_filepath))
 
+mtg_color_pie = {
+	"White": '#fff6aa',
+	"Blue": '#308af2',
+	"Black": '#000000',
+	"Red": '#e20f0f',
+	"Green": '#29bc1c',
+	"Colorless": '#9b744a'
+}
+
 # Chart Styles
 mtg_colour_style = Style(
 	transition='400ms ease-in',
-  	colors=('#fff6aa', '#308af2', '#000000', '#e20f0f', '#29bc1c', '#9b744a'),
+  	colors=(mtg_color_pie['White'], mtg_color_pie['Blue'], mtg_color_pie['Black'], mtg_color_pie['Red'],
+  	 		mtg_color_pie['Green'], mtg_color_pie['Colorless']),
   	background="transparent",
   	label_font_size=25,
   	title_font_size=25,
@@ -46,6 +56,8 @@ general_style = Style(
   	legend_font_size=25,
   	tooltip_font_size=25
   	)
+
+
 
 # Create your views here
 def search(request):
@@ -111,7 +123,7 @@ def deck_view(request, pk):
 				"G": [],
 				"C": []}
 
-	card_colour_distribtuion = { "W": 0,
+	card_color_distribution = { "W": 0,
 				"U": 0,
 				"B": 0,
 				"R": 0,
@@ -139,8 +151,8 @@ def deck_view(request, pk):
 			if 'Land' not in mtgjson_data[current_card]['types']:
 
 				# Count mana symbols in each card's cost
-				for key, value in card_colour_distribtuion.iteritems():
-					card_colour_distribtuion[key] += mtgjson_data[current_card]['manaCost'].count(key) * current_card_quantity
+				for key, value in card_color_distribution.iteritems():
+					card_color_distribution[key] += mtgjson_data[current_card]['manaCost'].count(key) * current_card_quantity
 
 				# If the card has a color ID then proceed
 				# Otherwise, it's colorless
@@ -183,22 +195,13 @@ def deck_view(request, pk):
 			cardtype_piechart.add(key, value)
 
 	cardcolor_piechart = pygal.Pie(style=mtg_colour_style)
-	cardcolor_piechart.title = "Deck Colours Breakdown"
-
-	for key, value in card_colour_distribtuion.iteritems():
-		if value > 0:
-			if key is "W":
-				cardcolor_piechart.add("White", value)
-			if key is "U":
-				cardcolor_piechart.add("Blue", value)
-			if key is "B":
-				cardcolor_piechart.add("Black", value)
-			if key is "R":
-				cardcolor_piechart.add("Red", value)
-			if key is "G":
-				cardcolor_piechart.add("Green", value)
-			if key is "C":
-				cardcolor_piechart.add("Colorless", value)
+	cardcolor_piechart.title = "Deck Colours Breakdown (by Mana Symbols)"
+	cardcolor_piechart.add("White", card_color_distribution["W"])
+	cardcolor_piechart.add("Blue", card_color_distribution["U"])
+	cardcolor_piechart.add("Black", card_color_distribution["B"])
+	cardcolor_piechart.add("Red", card_color_distribution["R"])
+	cardcolor_piechart.add("Green", card_color_distribution["G"])
+	cardcolor_piechart.add("Colorless", card_color_distribution["C"])
 
 	# Create CMC bar chart
 	cmc_barchart = pygal.StackedBar(style=mtg_colour_style)
