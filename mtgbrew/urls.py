@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^deck-builder/', views.deck_builder, name ='deck-builder'),
     url(r'^(?P<username>\w+)/my-decks', views.my_decks, name='my-decks'),
     url(r'^deck/(?P<pk>\d+)/$', views.deck_view, name ='deck-view'),
+    url(r'^deck/(?P<pk>\d+)/edit/$', views.deck_edit, name="deck-edit"),
     url(r'^accounts/', include('registration.backends.default.urls')),
 ]

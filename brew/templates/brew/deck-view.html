@@ -38,6 +38,14 @@
 				<p>Tags: {{deck.deck_tags}}</p>
 			</div>
 		</div><!-- Format & Tags -->
+
+		<div>
+			{% if current_user == deck_owner %}
+				<a class="btn btn-info" href="/deck/{{deck.pk}}/edit">Edit Deck</a>
+			{% else %}
+				<button class="button btn-default">Edit Copy</button>
+			{% endif %}
+		</div><!-- Edit Button-->
 	</div> <!-- Deck Header Row END -->
 	</div> <!-- ./deck-header -->
 
@@ -58,13 +66,13 @@
 			<div class="row" name="affiliate-links">
 				<div class="col-sm-4">
 				<form method="POST" action="https://www.cardhoarder.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
-					<button type="submit" class="btn btn-warning"> Buy on Cardhoarder: {{deck.deck_price_online}} TIX </button>
+					<button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-shopping-cart"></span> Buy on Cardhoarder</button>
 				</form>
 				</div>
 
 				<div class="col-sm-4">
 				<form method="POST" action="https://www.isleofcards.com/decks/upload?affiliate_id=twoo&deck={{url_decklist}}">
-					<button type="submit" class="btn btn-success"> Buy on Isle of Cards: ${{deck.deck_price_paper}} </button>
+					<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Buy on Isle of Cards</button>
 				</form>
 				</div>
 			</div>

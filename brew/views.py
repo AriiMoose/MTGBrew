@@ -94,6 +94,9 @@ def deck_view(request, pk):
 
 	deck = get_object_or_404(Deck, pk=pk)
 
+	current_user_string = str(request.user.get_username())
+	deck_owner_string = str(deck.deck_owner)
+
 	# Get card data for decklist
 	# Counters for card types
 	creature_count = 0
@@ -217,7 +220,9 @@ def deck_view(request, pk):
 	return render(request, 'brew/deck-view.html', {'deck': deck, 'cardcolor_chart': cardcolor_piechart.render(), 
 											'cardtype_chart': cardtype_piechart.render(), 
 											'cmc_chart': cmc_barchart.render(),
-											'url_decklist': url_decklist})
+											'url_decklist': url_decklist,
+											'current_user': current_user_string,
+											'deck_owner': deck_owner_string})
 
 @login_required
 def deck_builder(request):
@@ -241,5 +246,25 @@ def deck_builder(request):
 	else:
 		# Load empty form
 		form = DeckForm()
+
+	return render(request, 'brew/deck-builder.html', {'form': form})
+
+@login_required
+def deck_edit(request, pk):
+	deck = get_object_or_404(Deck, pk=pk)
+
+	if request.method == "POST":
+		form = DeckForm(request.POST, instance=deck)
+
+		if form.is_valid():
+			deck = form.save(commit=False)
+			deck.author = request.user
+			deck.deck_last_edited = timezone.now()
+			deck.save()
+
+			return redirect('deck_view', pk=deck.pk)
+
+	else:
+		form = DeckForm(instance=deck)
 
 	return render(request, 'brew/deck-builder.html', {'form': form})
