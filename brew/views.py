@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 # Django imports
 from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
@@ -57,13 +56,10 @@ general_style = Style(
   	tooltip_font_size=25
   	)
 
-
-
 # Create your views here
 def search(request):
 	return render(request, 'brew/deck-search.html')
 
-@login_required
 def my_decks(request, username):
 	current_user = User.objects.get(username=username)
 	user_decks = current_user.deck_set.all()
@@ -241,7 +237,7 @@ def deck_builder(request):
 			return redirect('deck-view', pk=deck.pk)
 
 		else:
-			print("INVALID FORM")	
+			print("INVALID FORM")
 
 	else:
 		# Load empty form
@@ -262,9 +258,20 @@ def deck_edit(request, pk):
 			deck.deck_last_edited = timezone.now()
 			deck.save()
 
-			return redirect('deck_view', pk=deck.pk)
+			return redirect('deck-view', pk=deck.pk)
 
 	else:
 		form = DeckForm(instance=deck)
 
 	return render(request, 'brew/deck-builder.html', {'form': form})
+
+def deck_delete(request, pk):
+	deck = get_object_or_404(Deck, pk=pk)
+
+	# If the user owns the deck, allow them delete
+	if deck.deck_owner == request.user:
+		deck.delete()
+		return redirect('my-decks', username=request.user)
+
+	else:
+		raise Http404

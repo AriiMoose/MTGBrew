@@ -5,9 +5,13 @@
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+{% load static %}
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
+
+<script src="https://use.fontawesome.com/2104d4014e.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'brew/bootstrap-social.css' %}">
 
 <title>MTGBrew</title>
 <content>
@@ -38,10 +42,10 @@
         {% if user.is_authenticated %}
           <li><a href="/{{request.user}}/my-decks">My Decks</a></li>
           <li><a href="#">My Account</a></li>
-          <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+          <li><a href="/accounts/logout">Logout</a></li>
 
         {% else %}
-          <li><a href="{% url 'auth_login' %}">Login/Register</a></li>
+          <li><a href="/accounts/login">Login/Register</a></li>
 
         {% endif %}
 

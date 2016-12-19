@@ -34,6 +34,7 @@ GAME_FORMATS = (
 		('PAU', 'Pauper'),
 	)
 
+print "Retrieving initial prices"
 cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
 isleofcards_data_url = "https://www.isleofcards.com/files/prices.txt"
 paper_data = urllib2.urlopen(isleofcards_data_url)
@@ -73,6 +74,10 @@ class DeckForm(ModelForm):
 	# Custom validation to clean the mainboard from
 	#		the deck builder view
 	def clean_decklist_mainboard(self):
+		# Reset deck price 
+		self.instance.deck_price_online = 0
+		self.instance.deck_price_paper = 0
+		
 		# Grab decklist from the form
 		mainboard_buffer = self.cleaned_data.get('decklist_mainboard')
 
