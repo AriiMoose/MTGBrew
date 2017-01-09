@@ -13,6 +13,7 @@
 
 	{# Contains basic deck info. E.G: Name, author, price etc #}
 	{# Aligned top-left #}
+	{% if current_user == deck_owner or deck.deck_privacy == false %}
 	<div class="deck-header">
 	<div class="row" name="content">
 		<div class="row">
@@ -95,6 +96,13 @@
 	</div>
 	</div><!-- End of deck contents & graphs-->
 	</div>
+
+	{% else %}
+	<div class="well">
+		<p align="center"> Sorry, this deck is private and cannot be viewed at the moment. If you are the owner of the deck, make sure you are logged in </p>
+	</div>
+
+	{% endif %}
 
 </div> <!-- ./deck-details -->
 </div> <!-- ./container -->

@@ -1,12 +1,13 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, render_to_response
 # Django imports
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views.defaults import page_not_found
 
 # Model imports
-from models import DeckForm, Deck
+from models import DeckForm, Deck, Card
 from django.contrib.auth.models import User
 
 # Python imports
@@ -17,10 +18,6 @@ from operator import itemgetter
 # Python library imports
 import pygal
 from pygal.style import Style
-
-# MTGO card data via Cardhoarder
-cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
-isleofcards_data_url = "https://www.isleofcards.com/files/prices.txt"
 
 # Load MTGJSON into memory
 mtgjson_filepath = "brew/static/brew/AllCards.json"
@@ -55,6 +52,11 @@ general_style = Style(
   	legend_font_size=25,
   	tooltip_font_size=25
   	)
+
+def handler404(request, exception):
+    template_name = '404.html'
+
+    return page_not_found(request, exception, template_name=template_name)
 
 # Create your views here
 def search(request):
@@ -135,54 +137,60 @@ def deck_view(request, pk):
 	# Parse Decklist for URL
 	url_decklist = deck.decklist_mainboard.replace('\n', '||') + '||' + deck.decklist_sideboard.replace('\n', '||')
 
-	for line in parsed_decklist:
-		if line is not "" or line is not None:
-			
-			current_card = str(line.split(" ", 1)[1]).strip()
-			current_card_quantity = int(line.split(" ", 1)[0])
+	# Attempt to generate graphs
+	try:
+		for line in parsed_decklist:
+			if line is not "" or line is not None:
+				
+				current_card = str(line.split(" ", 1)[1]).strip()
+				current_card_quantity = int(line.split(" ", 1)[0])
+				
+				for key, value in card_type_counts.iteritems():
+					if key in mtgjson_data[current_card]['types']:
+						card_type_counts[key] += current_card_quantity
+					
 
-			for key, value in card_type_counts.iteritems():
-				if key in mtgjson_data[current_card]['types']:
-					card_type_counts[key] += current_card_quantity
+				# Check for card colours and aggregate 
+				# Check if card has Color Identity to account for lands 
+				if 'Land' not in mtgjson_data[current_card]['types']:
 
-			# Check for card colours and aggregate 
-			# Check if card has Color Identity to account for lands 
-			if 'Land' not in mtgjson_data[current_card]['types']:
+					# Count mana symbols in each card's cost
+					for key, value in card_color_distribution.iteritems():
+						card_color_distribution[key] += mtgjson_data[current_card]['manaCost'].count(key) * current_card_quantity
 
-				# Count mana symbols in each card's cost
-				for key, value in card_color_distribution.iteritems():
-					card_color_distribution[key] += mtgjson_data[current_card]['manaCost'].count(key) * current_card_quantity
+					# If the card has a color ID then proceed
+					# Otherwise, it's colorless
+					if mtgjson_data[current_card].has_key('colorIdentity'):	
+						for key, value in card_cmc_lists.iteritems():		
+							if key in mtgjson_data[current_card]['colorIdentity']:
 
-				# If the card has a color ID then proceed
-				# Otherwise, it's colorless
-				if mtgjson_data[current_card].has_key('colorIdentity'):	
-					for key, value in card_cmc_lists.iteritems():		
-						if key in mtgjson_data[current_card]['colorIdentity']:
+								# Attempt to retreive the CMC
+								# If no CMC, set CMC to 0
+								try:
+									current_card_cmc = mtgjson_data[current_card]['cmc']
+									deck_cmc_list.append(current_card_cmc)
+									cmc_info = (current_card_cmc, current_card_quantity)
+									card_cmc_lists[key].append(cmc_info)
+								except:
+									current_card_cmc = 0
+									deck_cmc_list.append(current_card_cmc)
+									cmc_info = (current_card_cmc, current_card_quantity)
+									card_cmc_lists[key].append(cmc_info)
+					else:
+						try:
+							current_card_cmc = mtgjson_data[current_card]['cmc']
+							deck_cmc_list.append(current_card_cmc)
+							cmc_info = (current_card_cmc, current_card_quantity)
+							card_cmc_lists['C'].append(cmc_info)
+						except:
+							current_card_cmc = 0
+							deck_cmc_list.append(current_card_cmc)
+							cmc_info = (current_card_cmc, current_card_quantity)
+							card_cmc_lists['C'].append(cmc_info)
 
-							# Attempt to retreive the CMC
-							# If no CMC, set CMC to 0
-							try:
-								current_card_cmc = mtgjson_data[current_card]['cmc']
-								deck_cmc_list.append(current_card_cmc)
-								cmc_info = (current_card_cmc, current_card_quantity)
-								card_cmc_lists[key].append(cmc_info)
-							except:
-								current_card_cmc = 0
-								deck_cmc_list.append(current_card_cmc)
-								cmc_info = (current_card_cmc, current_card_quantity)
-								card_cmc_lists[key].append(cmc_info)
-				else:
-					try:
-						current_card_cmc = mtgjson_data[current_card]['cmc']
-						deck_cmc_list.append(current_card_cmc)
-						cmc_info = (current_card_cmc, current_card_quantity)
-						card_cmc_lists['C'].append(cmc_info)
-					except:
-						current_card_cmc = 0
-						deck_cmc_list.append(current_card_cmc)
-						cmc_info = (current_card_cmc, current_card_quantity)
-						card_cmc_lists['C'].append(cmc_info)
-
+	except:
+		print "Error parsing graph data"
+		
 	deck_cmc_list.sort()
 
 	# Create chart of card types

@@ -1,22 +1,21 @@
-import datetime
-
+# Django libraries
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.forms import ModelForm
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.contrib.postgres.fields import ArrayField
 from django.conf import settings
 
-from tagging.registry import register
-from tagging.fields import TagField
-from ckeditor.fields import RichTextField
+# Third-Party libraries
+from redactor.fields import RedactorField
 
+# Python libraries
 import json
 import re
 import time
 import urllib2
-from redactor.fields import RedactorField
+import datetime
 
 # Create your models here.
 
@@ -34,21 +33,27 @@ GAME_FORMATS = (
 		('PAU', 'Pauper'),
 	)
 
-print "Retrieving initial prices"
+digital_data_buffer = []
+paper_data_buffer = []
+paper_data_by_line = []
+card_data_by_line = []
+
+# Initial Data population
 cardhoarder_data_url = "https://www.cardhoarder.com/affiliates/pricefile/480166"
 isleofcards_data_url = "https://www.isleofcards.com/files/prices.txt"
 paper_data = urllib2.urlopen(isleofcards_data_url)
 mtgo_data = urllib2.urlopen(cardhoarder_data_url)
 card_data = set(mtgo_data.read().splitlines())
 paper_card_data = set(paper_data.read().splitlines())
-paper_data_by_line = []
-card_data_by_line = []
 
 for line in card_data:
-	card_data_by_line.append(line.split('\t'))
+	digital_data_buffer.append(line.split('\t'))
 
 for line in paper_card_data:
-	paper_data_by_line.append(line.split('\t'))
+	paper_data_buffer.append(line.split('\t'))
+
+paper_data_by_line = paper_data_buffer
+card_data_by_line = digital_data_buffer
 
 class Deck(models.Model):
 	deck_name = models.CharField(max_length=200, blank=False)
@@ -59,11 +64,22 @@ class Deck(models.Model):
 	deck_need_feedback = models.BooleanField(blank=True)
 	deck_rating	= models.IntegerField()
 	deck_last_edited = models.DateTimeField()
-	deck_tags = TagField(blank=True)
+	deck_tags = models.CharField(blank=True, max_length=200)
 	deck_description = RedactorField(verbose_name=u'Deck Description')
 	decklist_mainboard = models.CharField(max_length=1000, blank=False)
 	decklist_sideboard = models.CharField(max_length=1000, blank=True)
 	deck_owner = models.ForeignKey(settings.AUTH_USER_MODEL, default=None)
+
+class PaperCardStore(models.Model):
+	paper_store = ArrayField(models.CharField(max_length=200, blank=True), size=None, blank=True)
+
+class DigitalCardStore(models.Model):
+	digital_store = ArrayField(models.CharField(max_length=200, blank=True), size=None, blank=True)
+
+class Card(models.Model):
+	card_name = models.CharField(max_length=200, blank=False)
+	card_price_paper = models.DecimalField(validators=[MinValueValidator(0)], default=0.00, max_digits=6, decimal_places=2)
+	card_price_online = models.DecimalField(validators=[MinValueValidator(0)], default=0.00, max_digits=6, decimal_places=2)
 
 class DeckForm(ModelForm):
 	class Meta:
@@ -101,7 +117,14 @@ class DeckForm(ModelForm):
 		return sideboard_buffer
 
 	def parse_board(self, deck_board):
+		card_data_by_line = DigitalCardStore.objects.values_list('digital_store', flat=True)
+		paper_data_by_line = PaperCardStore.objects.values_list('paper_store', flat=True)
+		print paper_data_by_line
 		parsed_deck_board = deck_board.split('\n')
+		verified_current_card_digital = None
+		verified_current_card_paper = None
+
+		print card_data_by_line
 
 		# Iterate through mainboard and check if card exists
 		for line in parsed_deck_board:
@@ -124,6 +147,7 @@ class DeckForm(ModelForm):
 				for sublist in paper_data_by_line:
 					if current_card.lower() in (sublist_card.lower() for sublist_card in sublist):
 						verified_current_card_paper = sublist
+						break
 
 				# If the card doesn't exist, return a Validation Error
 				# Else, find price, and add it to the total
@@ -136,4 +160,3 @@ class DeckForm(ModelForm):
 					raise ValidationError("Cannot find card: " + current_card)
 				else:
 					self.instance.deck_price_paper += float(verified_current_card_paper[5]) * current_card_quantity
-register(Deck)

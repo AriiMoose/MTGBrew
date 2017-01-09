@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,6 +54,9 @@ INSTALLED_APPS = [
     'haystack',
     'tagging',
     'redactor',
+    'huey.contrib.djhuey',
+    'django_celery_results',
+    'background_task',
 
     # Authentication Apps
     'allauth',
@@ -135,7 +139,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -163,11 +166,22 @@ LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not
                                         # and are trying to access pages requiring authentication
 
 # AllAuth Config Settings
-
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 CKEDITOR_CONFIGS = {
     'default': {
         'height': 250,
         'width': 500,
+    },
+}
+
+CELERY_BEAT_SCHEDULE = {
+    "price_updates": {
+        "task": "brew.tasks.price_update",
+        "schedule": timedelta(seconds=15),
     },
 }
