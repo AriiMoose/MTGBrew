@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.views.defaults import page_not_found
 
 # Model imports
-from models import DeckForm, Deck, Card
+from models import DeckForm, Deck, Card, DeckForm
 from django.contrib.auth.models import User
 
 # Python imports
@@ -53,6 +53,27 @@ general_style = Style(
   	tooltip_font_size=25
   	)
 
+
+def page_not_found(request):
+	response = render_to_response(
+		'brew/404.html',
+		context_instance=RequestContext(request)
+		)
+
+	response.status_code = 404
+
+	return response
+
+def server_error(request):
+	response = render_to_response(
+		'brew/500.html',
+		context_instance=RequestContext(request)
+		)
+
+	response.status_code = 500
+
+	return response
+
 # Create your views here
 def search(request):
 	return render(request, 'brew/deck-search.html')
@@ -86,6 +107,12 @@ def deck_view(request, pk):
 		return new_cmc
 
 	deck = get_object_or_404(Deck, pk=pk)
+
+	try:
+		DeckForm.parse_board(deck.decklist_mainboard)
+		DeckForm.parse_board(deck.decklist_sideboard)
+	except:
+		print "Couldn't update prices"
 
 	current_user_string = str(request.user.get_username())
 	deck_owner_string = str(deck.deck_owner)

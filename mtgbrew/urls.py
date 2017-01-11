@@ -22,10 +22,10 @@ handler400, handler403, handler404, handler500
 
 from brew import views
 
-handler400 = 'my_app.views.bad_request'
-handler403 = 'my_app.views.permission_denied'
-handler404 = 'my_app.views.page_not_found'
-handler500 = 'my_app.views.server_error'
+handler400 = 'brew.views.bad_request'
+handler403 = 'brew.views.permission_denied'
+handler404 = 'brew.views.page_not_found'
+handler500 = 'brew.views.server_error'
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
