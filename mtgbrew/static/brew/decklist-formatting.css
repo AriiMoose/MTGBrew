@@ -1,0 +1,62 @@
+.deck-list { 
+    width: 100%;
+    margin: 2em auto;
+    
+}
+
+.deck-list .tappedOut {
+    margin: 0.5em;
+    /* background: rgba(0, 0, 0, 0.1); */
+    /* border: solid 1px #ccc; */
+}
+
+.deck-list .tappedOut .tappedout_title {
+    float: left;
+    font-size: 1.2em;
+    padding: 0.2em 0.3em;
+}
+.deck-list .tappedOut .tappedout_title select {
+    width: auto;
+}
+
+.deck-list .tappedOut ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1em;
+}
+
+.deck-list .tappedOut ul li {
+    margin: 0;
+}
+
+.deck-list .tappedOut h3 {
+    font-size: 1.1em;
+    padding: 0;
+    margin: 0.5em 0;
+}
+
+.deck-list .tappedOut .tappedout_header {
+    padding: 0.5em;
+    text-align: left;
+    height: 3em;
+    vertical-align: baseline;
+}
+
+.deck-list .tappedOut .tappedout_body {
+	width: 100%;
+    margin: 1em auto;
+	-moz-column-count:3;
+    -moz-column-gap: 3%;
+    -moz-column-width: 30%;
+    -webkit-column-count:3;
+    -webkit-column-gap: 3%;
+    -webkit-column-width: 30%;
+    column-count: 3;
+    column-gap: 3%;
+    column-width: 30%;
+}
+
+.deck-list .tappedOut .tappedout_footer {
+    padding: 0.2em 0.5em 0.5em 1em;
+    font-size: 0.8em;
+}

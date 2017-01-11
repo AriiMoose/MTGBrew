@@ -1,0 +1,44 @@
+body {
+	background-color: #182825;
+	/*2d1e2f*/
+	/*6d8ea0*/
+}
+
+.navbar-static-top {
+	background-color: black;
+	color: black;
+	border-bottom-width: 10px;
+	border-bottom-color: #22aed1;
+}
+
+.navbar-brand {
+	font-size: 30;
+}
+
+/*.nav.navbar-nav li a {
+   color: black;
+ }
+
+/*.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+color: #984447;;  /*Sets the text hover color on navbar*
+}*/
+
+.jumbotron {
+	/*e6e8e6*/
+	background-color: white;
+	border-style: solid;
+	border-color: grey;
+	border-width: 2px
+}
+
+.well {
+	background-color: white;
+	border-color: grey;
+	border-width: 2px;
+}
+#footer {
+   position: relative;
+   bottom:0;
+   width:100%;
+   background: white;
+}
