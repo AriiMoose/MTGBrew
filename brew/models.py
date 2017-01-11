@@ -33,6 +33,12 @@ GAME_FORMATS = (
 		('PAU', 'Pauper'),
 	)
 
+DECK_PRIVACY = (
+		('PUB', 'Public'),
+		('PRV', 'Private'),
+		('UNL', 'Unlisted'),
+	)
+
 digital_data_buffer = []
 paper_data_buffer = []
 paper_data_by_line = []
@@ -60,7 +66,7 @@ class Deck(models.Model):
 	deck_format = models.CharField(max_length=50, choices=GAME_FORMATS, blank=False)
 	deck_price_paper = models.IntegerField(validators=[MinValueValidator(0)], default=0)
 	deck_price_online = models.IntegerField(validators=[MinValueValidator(0)], default=0)
-	deck_privacy = models.BooleanField(blank=True)
+	deck_privacy = models.CharField(max_length=20, choices=DECK_PRIVACY, blank=False)
 	deck_need_feedback = models.BooleanField(blank=True)
 	deck_rating	= models.IntegerField()
 	deck_last_edited = models.DateTimeField()

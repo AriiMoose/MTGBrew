@@ -11,14 +11,14 @@
 {% bootstrap_messages %}
 
 <script src="https://use.fontawesome.com/2104d4014e.js"></script>
+<script src="{% static 'js/tooltip.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'brew/bootstrap-social.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'brew/base.css' %}">
 
 <title>MTGBrew</title>
-<content>
-<div class="container">
-
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
+<header id="masthead" class="site-header" role="banner">
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -27,7 +27,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">MTGBrew</a>
+      <a class="navbar-brand">MTGBrew<br></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -53,9 +53,9 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-</div><!-- /.container -->
+</header>
 
-
+<content>
 <body>
 <div class="container">
 {% block content %}
@@ -65,9 +65,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
-
-<footer> <p align="center">Magic the Gather is copyright of Wizards of the Cost, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. Articles and content are user-created and do not represent official endorsement of this site.<br>
-
-Having issues? Please send an email to ariimoose@gmail.com and we'll look into it!
-</p></footer>
 </content>
+<div id="footer" class="well">
+  <footer> <p align="center">Magic the Gather is copyright of Wizards of the Cost, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. Articles and content are user-created and do not represent official endorsement of this site.<br>
+
+  Having issues? Please send an email to ariimoose@gmail.com and we'll look into it!
+  </p></footer>
+</div>

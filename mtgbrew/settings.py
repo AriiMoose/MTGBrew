@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'o&0@$61id*gs%4sfge3j1j4ak^0#x$cr^7xe_2$@7#levh*&v&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -182,6 +182,6 @@ CKEDITOR_CONFIGS = {
 CELERY_BEAT_SCHEDULE = {
     "price_updates": {
         "task": "brew.tasks.price_update",
-        "schedule": timedelta(seconds=15),
+        "schedule": timedelta(seconds=900),
     },
 }

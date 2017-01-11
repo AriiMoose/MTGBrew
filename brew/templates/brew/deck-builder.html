@@ -6,32 +6,19 @@
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="{% static 'js/bootstrap-tagsinput.js' %}"></script>
 <script src="http://tappedout.net/tappedout.js"></script>
-
-<!-- Script to disable Enter key for form submission -->
-<script type="text/javascript">
-
-function stopRKey(evt) {
-  var evt = (evt) ? evt : ((event) ? event : null);
-  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
-  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
-}
-
-document.onkeypress = stopRKey;
-
-</script>
+<script src="{% static 'js/stop_enter_key.js' %}"></script>
 
 <link rel="stylesheet" type="text/css" href="{% static 'brew/search.css' %}" />
 <link rel="stylesheet" href="{% static 'brew/bootstrap-tagsinput.css' %}">
+<link rel="stylesheet" href="{% static 'brew/builder.css' %}">
 <div class="container">
 
 <form method="POST" class="deck-form">
 	{% csrf_token %}	
 	{{form.media}}
-	
-	<h2>Deck Editor</h2>
 
-	<div name="deck-info" class="jumbotron">
-
+	<div name="deck-info" class="well">
+		<h2>Deck Editor</h2>
 		{{form.non_field_errors}}
 
 		<div class="form-group row">
@@ -61,10 +48,12 @@ document.onkeypress = stopRKey;
 		<div class="form-group row">
 			{# Deck Tags #}
 			<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-				<div class="input-group input-group-md">
+				<div class="input-group input-group-md" style="padding-bottom: 5px">
 					<span class="input-group-addon">Tags</span>
-					<input id="deck_tags" type="text" name="deck_tags" class="form-control" data-role="tagsinput" value="{{ form.deck_tags.value|default_if_none:'' }}">
+					<input id="deck_tags" type="text" name="deck_tags" class="form-control" data-role="tagsinput"
+					 value="{{ form.deck_tags.value|default_if_none:'' }}">
 				</div><!-- /.input-group -->
+				<small>Tags help categorise decks. Give your deck a tag (E.G: 'midrange', 'izzet' etc) then hit enter.</small>
 				{{form.deck_tags.errors}}
 			</div>
 
@@ -72,19 +61,11 @@ document.onkeypress = stopRKey;
 			</div>
 
 			{# Deck Privacy #}	
-			<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
-				<div class="input-group input-group-md">
-				<label><input id="deck_privacy" type="checkbox" name="deck_privacy" value="Private"> Is Private</label>
-				</div><!-- /.input-group -->
-				{{form.deck_privacy.errors}}
-			</div>
-
-			{# Deck Looking For Feedback #}
-			<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
-				<div class="input-group input-group-md">
-				<label><input id="deck_need_feedback" type="checkbox" name="deck_need_feedback" value="Feedback"> Needs Feedback</label>
-				</div><!-- /.input-group -->
-				{{form.deck_need_feedback.errors}}
+			<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+				<div class="format-group field-wrapper">
+					<label for="privacy-selection">Privacy:</label>
+					{{form.deck_privacy}}
+				</div><!-- /.format-group -->
 			</div>
 			
 		</div> <!--Deck Tags, Privacy & Feedback -->
@@ -116,11 +97,7 @@ document.onkeypress = stopRKey;
 			</div>
 
 			<small>
-			Put each card entry on a new line. For example:
-			<br>
-			4 Storm Crow
-			<br>
-			2 Doom Blade
+			<a data-toggle="modal" data-target="#FormattingHelpModal">Formatting Help</a>
 			</small>
 			
 			<br>
@@ -145,5 +122,38 @@ document.onkeypress = stopRKey;
 </div><!-- /.jumobtron -->
 
 </form>
+<!-- Modals -->
+<div id="FormattingHelpModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+	<!-- Modal Content -->
+	<div class="modal-content">
+		<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Formatting Help</h4>
+		</div>
+
+		<div class="modal-body">
+			<p> When adding cards to your decklist, be sure to put each card entry on a new line. For example:
+			<br>
+			4 Storm Crow
+			<br>
+			4 Doom Blade
+			<br>
+			<br>
+
+			If adding split cards just add one half of the card. For example, Wear//Tear could be listed like:
+			<br>
+			2 Wear
+			<br>
+			Or
+			<br>
+			2 Tear
+			</p>
+		</div>
+
+	</div>
+</div>
+
 </div><!-- /.container -->
 {% endblock %}

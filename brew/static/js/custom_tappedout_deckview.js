@@ -182,7 +182,7 @@
 
                 html = '<div class="tappedOut">'
                     + header
-                    + '<div class="tappedout_body well">' + contents + '</div>'
+                    + '<div class="tappedout_body">' + contents + '</div>'
                     + footer
                     + '</div>';
                 self.cache[self.sort] = html;

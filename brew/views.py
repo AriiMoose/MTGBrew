@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect, render_to_response
 # Django imports
 from django.http import HttpResponseRedirect, HttpResponse
-from django.template import loader
+from django.template import loader, RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.defaults import page_not_found
@@ -52,11 +52,6 @@ general_style = Style(
   	legend_font_size=25,
   	tooltip_font_size=25
   	)
-
-def handler404(request, exception):
-    template_name = '404.html'
-
-    return page_not_found(request, exception, template_name=template_name)
 
 # Create your views here
 def search(request):
@@ -239,6 +234,7 @@ def deck_builder(request):
 			deck.deck_rating = 0
 			deck.deck_owner = request.user
 			deck.deck_last_edited = timezone.now()
+			deck.deck_need_feedback = False
 
 			deck.save()
 

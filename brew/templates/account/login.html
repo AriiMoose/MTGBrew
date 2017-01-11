@@ -7,43 +7,61 @@
 
 {% block content %}
 
-  <div class="well col-lg-6 col-lg-offset-3" align="center">
-   <a class="btn btn-block btn-social btn-twitter" href="/accounts/facebook/login">  
-      <span class="fa fa-facebook"></span> <div class="fb">Sign in with Facebook</div>
-    </a><br>
-    {% include "socialaccount/snippets/login_extra.html" %}
+  <div class="col-lg-6 col-lg-offset-3">
 
-    <div class="inset">
-        <div class="header">Or sign in directly</div><br>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="panel-title text-center">
+          Welcome to MTGBrew
+          <br>
+          <h5>Please login or <a href="{% url 'account_signup' %}">Sign Up</a><h>
+        </div>
+      </div>
+
+      <div class="panel-body">
+        <div id="social_login" align="center">
+            <a class="btn btn-social btn-twitter" href="/accounts/facebook/login">  
+            <span class="fa fa-facebook"></span> <div class="fb">Sign in with Facebook</div>
+            </a><br>
+            {% include "socialaccount/snippets/login_extra.html" %}
+        </div>
+
+        <div class="login-or">
+          <hr class="hr-or">
+          <span class="span-or"></span>
+        </div>
+
         <form class="login" method="POST" action="{% url 'account_login' %}">
           {% csrf_token %}
             {{ form.non_field_errors }}
-            <div class="input-group input-group-md">
-              <span class="input-group-addon">Username</span>
-              <input id="id_login" class="login-input form-control" maxlength="30" name="login" placeholder="Enter Your Username or Email" type="text" />{{ form.login.errors }}<br>
+            <div class="input-group input-group-md" style="padding-top: 10px">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+              <input id="id_login" class="login-input form-control" name="login" placeholder="Email" type="text" />{{ form.login.errors }}<br>
             </div>
 
-            <div class="input-group input-group-md">
-              <span class="input-group-addon">Password</span>
-              <input id="id_password" class="login-input form-control" name="password" placeholder="Enter Your Password" type="password" />{{ form.password.errors }}<br>
+            <div class="input-group input-group-md" style="padding-top: 10px; padding-bottom:5px">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input id="id_password" class="login-input form-control" name="password" placeholder="Password" type="password" />{{ form.password.errors }}<br>
             </div>
-
-
-            <div class="remember-forgot-section">
+            <div class="remember-forgot-section ">
                 <input id="id_remember" name="remember" type="checkbox"/>
                 <label for="id_remember">Remember Me</label>
-                <a class="forgot" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                <div id="forgot-pw" class="pull-right">
+                  <small><a class="forgot" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a></small>
+                </div>
             </div>
+            
+
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
 
-          <button class="btn btn-default" type="submit">{% trans "Sign In" %}</button>
+          <div id="standard_login" style="padding-top: 30px">
+            <button class="btn btn-primary" type="submit" align="center"><i class="glyphicon glyphicon-log-in"></i> {% trans "Sign In" %}</button>
+            
+          </div>
         </form>
-
-        <div class="footnote">
-            Don't have an account? Login with Facebook above or <a href="{% url 'account_signup' %}">Sign Up</a>
-        </div>
+      </div>
     </div>
   </div> 
 {% endblock %}
