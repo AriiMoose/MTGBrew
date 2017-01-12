@@ -38,6 +38,7 @@ mtg_colour_style = Style(
   	colors=(mtg_color_pie['White'], mtg_color_pie['Blue'], mtg_color_pie['Black'], mtg_color_pie['Red'],
   	 		mtg_color_pie['Green'], mtg_color_pie['Colorless']),
   	background="transparent",
+  	font_family="Arial",
   	label_font_size=25,
   	title_font_size=25,
   	legend_font_size=25,
@@ -47,6 +48,7 @@ mtg_colour_style = Style(
 general_style = Style(
 	transition='400ms ease-in',
   	background="transparent",
+  	font_family="Arial",
   	label_font_size=25,
   	title_font_size=25,
   	legend_font_size=25,
@@ -107,12 +109,6 @@ def deck_view(request, pk):
 		return new_cmc
 
 	deck = get_object_or_404(Deck, pk=pk)
-
-	try:
-		DeckForm.parse_board(deck.decklist_mainboard)
-		DeckForm.parse_board(deck.decklist_sideboard)
-	except:
-		print "Couldn't update prices"
 
 	current_user_string = str(request.user.get_username())
 	deck_owner_string = str(deck.deck_owner)
