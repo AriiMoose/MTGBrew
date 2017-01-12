@@ -40,7 +40,6 @@
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
           <li><a href="/{{request.user}}/my-decks">My Decks</a></li>
-          <li><a href="#">My Account</a></li>
           <li><a href="/accounts/logout">Logout</a></li>
 
         {% else %}
