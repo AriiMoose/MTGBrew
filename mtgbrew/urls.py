@@ -30,7 +30,7 @@ handler500 = 'brew.views.server_error'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^redactor/', include('redactor.urls')),
-    #url(r'^$', views.search, name='search'),
+    url(r'^feedback/', views.search, name='feedback'),
     url(r'^$', views.deck_builder, name ='deck-builder'),
     url(r'^(?P<username>\w+)/my-decks', views.my_decks, name='my-decks'),
     url(r'^deck/(?P<pk>\d+)/$', views.deck_view, name ='deck-view'),

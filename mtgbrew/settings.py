@@ -185,6 +185,6 @@ CKEDITOR_CONFIGS = {
 CELERY_BEAT_SCHEDULE = {
     "price_updates": {
         "task": "brew.tasks.price_update",
-        "schedule": timedelta(seconds=900),
+        "schedule": timedelta(seconds=15),
     },
 }

@@ -27,17 +27,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">MTGBrew<br></a>
+      <a class="navbar-brand">MTGBrew <sub id="beta-tag">Beta</sub></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/deck-builder/">Deck Builder</a></li>
+        <li><a href="/">Deck Builder</a></li>
         </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
+          <li></li>
+          <li><a href="/feedback/">Feedback</a></li>
         {% if user.is_authenticated %}
           <li><a href="/{{request.user}}/my-decks">My Decks</a></li>
           <li><a href="/accounts/logout">Logout</a></li>
@@ -67,6 +69,6 @@
 <div id="footer" class="well">
   <footer> <p align="center">Magic: the Gathering is copyright of Wizards of the Cost, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated. Articles and content are user-created and do not represent official endorsement of this site.<br><br>
 
-  Having issues? Please send an email to ariimoose@gmail.com and we'll look into it!
+  Having issues? Please send an email to mtgbrew@gmail.com and we'll look into it!
   </p></footer>
 </div>

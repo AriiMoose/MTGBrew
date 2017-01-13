@@ -50,11 +50,12 @@
 				</div>
 			</div><!-- Format & Tags -->
 
-			<div>
+			<div style="padding-bottom: 10px">
 				{% if current_user == deck_owner %}
 					<a class="btn btn-info" href="/deck/{{deck.pk}}/edit">Edit Deck</a>
 				{% endif %}
 			</div><!-- Edit Button-->
+			<small>Last Edited: {{ deck.deck_last_edited }}</small>
 
 			<div class="contents-divider">
 	          <hr class="hr-or">

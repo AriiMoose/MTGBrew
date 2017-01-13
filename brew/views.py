@@ -10,6 +10,8 @@ from django.views.defaults import page_not_found
 from models import DeckForm, Deck, Card, DeckForm
 from django.contrib.auth.models import User
 
+from brew import tasks
+
 # Python imports
 import urllib2
 import json
@@ -129,6 +131,7 @@ def deck_view(request, pk):
 		return new_cmc
 
 	deck = get_object_or_404(Deck, pk=pk)
+	tasks.update_deck_cost(deck)
 
 	current_user_string = str(request.user.get_username())
 	deck_owner_string = str(deck.deck_owner)

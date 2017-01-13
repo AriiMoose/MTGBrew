@@ -96,7 +96,11 @@ class DeckForm(ModelForm):
 	# Custom validation to clean the mainboard from
 	#		the deck builder view
 	def clean_decklist_mainboard(self):
-		# Reset deck price 
+		# Get price data
+		card_data_by_line = DigitalCardStore.objects.values_list('digital_store', flat=True)
+		paper_data_by_line = PaperCardStore.objects.values_list('paper_store', flat=True)
+
+		# Reset deck price
 		self.instance.deck_price_online = 0
 		self.instance.deck_price_paper = 0
 		
@@ -123,8 +127,7 @@ class DeckForm(ModelForm):
 		return sideboard_buffer
 
 	def parse_board(self, deck_board):
-		card_data_by_line = DigitalCardStore.objects.values_list('digital_store', flat=True)
-		paper_data_by_line = PaperCardStore.objects.values_list('paper_store', flat=True)
+		print "Beginng board clean"
 		print paper_data_by_line
 		parsed_deck_board = deck_board.split('\n')
 		verified_current_card_digital = None
