@@ -62,8 +62,6 @@ def price_update():
 	DigitalCardStore.objects.bulk_create(digital_insert_list)
 
 def update_deck_cost(deck):
-	print "Updating total deck price"
-
 	deck_boards = []
 	deck_boards.append(deck.decklist_mainboard)
 	deck_boards.append(deck.decklist_sideboard)
@@ -76,8 +74,6 @@ def update_deck_cost(deck):
 		parsed_deck_board = board.split('\n')
 		verified_current_card_digital = None
 		verified_current_card_paper = None
-
-		print card_data_by_line
 
 		# Iterate through mainboard and check if card exists
 		for line in parsed_deck_board:
@@ -104,7 +100,7 @@ def update_deck_cost(deck):
 
 				# If the card doesn't exist, return a Validation Error
 				# Else, find price, and add it to the total
-				if verified_current_card_digital is None:
+				if verified_current_card_digital is not None:
 					print "Cannot find " + str(current_card)
 				else:
 					deck.deck_price_online += float(verified_current_card_digital[5]) * current_card_quantity
