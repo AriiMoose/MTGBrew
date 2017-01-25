@@ -21,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'o&0@$61id*gs%4sfge3j1j4ak^0#x$cr^7xe_2$@7#levh*&v&'
+with open(r'mtgbrew/etc/secret_key.txt') as f:
+    SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -79,6 +80,9 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_COOKIE_HTTPONLY = True
+X_FRAME_OPTIONS = 'DENY'
+
 ROOT_URLCONF = 'mtgbrew.urls'
 
 TEMPLATES = [
@@ -110,6 +114,10 @@ WSGI_APPLICATION = 'mtgbrew.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+
+
+with open(r'mtgbrew/etc/dbpw.txt') as f:
+    dbpw = f.read().strip()
 
 DATABASES = {
     'default': {
@@ -169,11 +177,18 @@ LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not
                                         # and are trying to access pages requiring authentication
 
 # AllAuth Config Settings
-EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+# Email Config
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mtgbrew@gmail.com'
+EMAIL_HOST_PASSWORD = '1@bA7!0@8'
+EMAIL_PORT = 587
 
 CKEDITOR_CONFIGS = {
     'default': {
