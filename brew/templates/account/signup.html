@@ -21,20 +21,28 @@
 		            {{ form.non_field_errors }}
 		            <div class="input-group input-group-md" style="padding-top: 10px">
 		              <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-		              <input id="id_username" class="login-input form-control" name="username" type="text" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}"> {{ form.username.errors }}
+		              <input id="id_username" class="login-input form-control" name="username" type="text" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}"> 
 		            </div>
+		            {{ form.username.errors }}
+
 		            <div class="input-group input-group-md" style="padding-top: 10px">
 		              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-		              <input id="id_password" class="login-input form-control" name="password" type="password" placeholder="Password" value="{{ form.password1.value|default_if_none:'' }}"> {{ form.password1.errors }}
+		              <input id="password1" class="login-input form-control" name="password1" type="password" placeholder="Password" value="{{ form.password1.value|default_if_none:'' }}"> 
 		            </div>
+		            {{ form.password1.errors }}
+
 		            <div class="input-group input-group-md" style="padding-top: 10px">
 		              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-		              <input id="id_password2" class="login-input form-control" name="password2" type="password" placeholder="Confirm Password" value="{{ form.password2.value|default_if_none:'' }}">
+		              <input id="password2" class="login-input form-control" name="password2" type="password" placeholder="Confirm Password" value="{{ form.password2.value|default_if_none:'' }}">
 		            </div>
+		            {{ form.password2.errors }}
+
 		            <div class="input-group input-group-md" style="padding-top: 10px">
 		              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-		              <input id="id_email" class="login-input form-control" name="email" type="email" placeholder="email@address.com"> {{ form.email.errors }}
+		              <input id="id_email" class="login-input form-control" name="email" type="email" placeholder="email@address.com"> 
 		            </div><br>
+		            {{ form.email.errors }}
+
 		          {% if redirect_field_value %}
 		          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
 		          {% endif %}
