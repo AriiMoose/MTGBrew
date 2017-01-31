@@ -59,12 +59,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'debug_toolbar',
     'floppyforms',
-    'haystack',
     'tagging',
     'redactor',
-    'huey.contrib.djhuey',
-    'django_celery_results',
-    'background_task',
 
     # Authentication Apps
     'allauth',
