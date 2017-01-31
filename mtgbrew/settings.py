@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 from datetime import timedelta
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,6 +43,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 INSTALLED_APPS = [
     # Django apps/libraries
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -170,11 +172,19 @@ LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not
                                         # and are trying to access pages requiring authentication
 
 # AllAuth Config Settings
-EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+# Email Config
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mtgbrew@gmail.com'
+EMAIL_HOST_PASSWORD = '1@bA7!0@8'
+EMAIL_PORT = 587
+
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -186,6 +196,6 @@ CKEDITOR_CONFIGS = {
 CELERY_BEAT_SCHEDULE = {
     "price_updates": {
         "task": "brew.tasks.price_update",
-        "schedule": timedelta(seconds=15),
+        "schedule": crontab(minute='*/30'),
     },
 }
