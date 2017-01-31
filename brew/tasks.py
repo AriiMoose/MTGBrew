@@ -101,7 +101,11 @@ def update_deck_cost(deck):
 				# If the card doesn't exist, return a Validation Error
 				# Else, find price, and add it to the total
 				if verified_current_card_digital is None:
+<<<<<<< HEAD
 					print "Cannot find digital card: " + str(current_card)
+=======
+					print "Cannot find " + str(current_card)
+>>>>>>> 8bd2cac5e61efd3ee8f79e6f45b53e697d0b7eb5
 				else:
 					deck.deck_price_online += float(verified_current_card_digital[5]) * current_card_quantity
 
